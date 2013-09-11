@@ -9,11 +9,14 @@ MixERP is ASP.net open source ERP Solution.
 * This project was migrated from CodePlex website.
 * All icons used in MixERP project were downloaded from [FindIcons](http://findicons.com/search/page). While downloading, we had chosen the license type **"Both Above Two"** which means (or meant at that time) **"Commercial Use"** and **"No Link Required"**.
 
+![MixERP Dashboard](http://mixerp.org/images/features/mixerp-dashboard.png)
+
+
 **Useful Links**
 * [MixERP Demo Website] (http://demo.mixerp.org/SignIn.aspx)
 * [MixERP Documentation](https://github.com/binodnp/mixerp/wiki/documentation)
 * [Contribution Guidelines] (wiki/contribution-guidelines)
-* [About MixERP] (https://github.com/binodnp/mixerp/wiki/about-mixerp)
+* [About MixERP] (https://github.com/binodnp/mixerp/wiki)
 * [Project Website] (http://mixerp.org/)
 * [Follow MixERP on Facebook] (http://facebook.com/mixoferp/)
 * [Facebook Discussions Group] (http://www.facebook.com/groups/183076085203506/)

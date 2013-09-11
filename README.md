@@ -11,9 +11,9 @@ MixERP is ASP.net open source ERP Solution.
 
 **Useful Links**
 * [MixERP Demo Website] (http://demo.mixerp.org/SignIn.aspx)
-* [MixERP Documentation](wiki/documentation)
+* [MixERP Documentation](https://github.com/binodnp/mixerp/wiki/documentation)
 * [Contribution Guidelines] (wiki/contribution-guidelines)
-* [About MixERP] (wiki/about-mixerp)
+* [About MixERP] (https://github.com/binodnp/mixerp/wiki/about-mixerp)
 * [Project Website] (http://mixerp.org/)
 * [Follow MixERP on Facebook] (http://facebook.com/mixoferp/)
 * [Facebook Discussions Group] (http://www.facebook.com/groups/183076085203506/)

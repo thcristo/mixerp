@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>MixErp® 2013</title>
+    <link href="/Themes/purple/main.css" rel="stylesheet" type="text/css" />
+    <style type="text/css" media="all">
+        html, body
+        {
+            padding: 4px;
+        }
+
+        body
+        {
+            /* fallback */
+            background-color: #FFFFFF;
+            background-repeat: repeat-y;
+            /* Safari 4-5, Chrome 1-9 */
+            background: -webkit-gradient(linear, left top, right top, from(#FFFFFF), to(#FFFFFF));
+            /* Safari 5.1, Chrome 10+ */
+            background: -webkit-linear-gradient(left, #FFFFFF, #FFFFFF);
+            /* Firefox 3.6+ */
+            background: -moz-linear-gradient(left, #FFFFFF, #FFFFFF);
+            /* IE 10 */
+            background: -ms-linear-gradient(left, #FFFFFF, #FFFFFF);
+            /* Opera 11.10+ */
+            background: -o-linear-gradient(left, #FFFFFF, #FFFFFF);
+        }
+
+        table
+        {
+            border-collapse: collapse;
+        }
+
+        td
+        {
+            padding: 4px;
+        }
+
+        @media print
+        {
+            .hide
+            {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    {Header}
+    <h1>
+        {ReportHeading}
+    </h1>
+    <hr class="hr" />
+    Printed On: {PrintDate}<br />
+    User: {UserName}<br />
+    Office Code: {OfficeCode}
+    <br />
+    <br />
+    {Table}
+    <div class="hide" style="padding-top: 18px;">
+        <a href="javascript:top.close();" class="menu">
+            Close This Report</a>
+    </div>
+
+    <script type="text/javascript">
+        document.onkeydown = function (evt) {
+            evt = evt || window.event;
+            if (evt.keyCode == 27) {
+                top.close();
+            }
+        };
+    </script>
+</body>
+</html>

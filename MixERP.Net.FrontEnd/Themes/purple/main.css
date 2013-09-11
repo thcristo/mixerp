@@ -1,0 +1,981 @@
+﻿html, body, table, tr, td, h1, h2, h3, h4, h5, input, select, p, textarea
+{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Segoe UI', 'Tahoma', 'Arial';
+}
+
+.menu-header, h1, h2, h3, h4, h5, .title, .menu-title
+{
+    font-family: 'Segoe UI Light'!important;
+}
+
+html
+{
+    height: 100%;
+}
+
+body
+{
+    height: 100%;
+    margin: auto;
+    overflow-x: auto;
+}
+
+#page
+{
+    width: 95%;
+    height: 100%;
+    display: table;
+}
+
+form
+{
+    height: 100%;
+}
+
+p
+{
+    padding: 3px 0px 3px 0px;
+}
+
+html, body, input, select, textarea
+{
+    font-size: 12px;
+}
+
+body
+{
+    /* fallback */
+    background-color: #6532B8;
+    background-repeat: repeat-y;
+    /* Safari 4-5, Chrome 1-9 */
+    background: -webkit-gradient(linear, left top, right top, from(#7B4FC2), to(#6532B8));
+    /* Safari 5.1, Chrome 10+ */
+    background: -webkit-linear-gradient(left, #6532B8, #7B4FC2);
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(left, #6532B8, #7B4FC2);
+    /* IE 10 */
+    background: -ms-linear-gradient(left, #6532B8, #7B4FC2);
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(left, #6532B8, #7B4FC2);
+}
+
+
+input, select
+{
+    /*font-weight: bold;*/
+    padding: 2px;
+    color: #333399;
+}
+
+    input[readonly]
+    {
+        background-color: #F0EBF5;
+    }
+
+.error-message
+{
+    color: Red;
+}
+
+#page
+{
+    margin: auto;
+}
+
+#content
+{
+    background-color: White;
+    width: 100%;
+    padding: 0px;
+    padding-right: 16px;
+    height: 100%;
+}
+
+.content
+{
+    padding: 8px;
+}
+
+#menu
+{
+    background-color: #8765C5;
+    width: 100%;
+    padding: 12px 8px 12px 8px;
+    font-weight: bold;
+    height: 14px;
+}
+
+
+#footer
+{
+    color: White;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 12px;
+}
+
+    #footer a
+    {
+        color: white;
+    }
+
+        #footer a:hover, #footer:hover
+        {
+            color: #FFFF00;
+        }
+
+#menu a, #menu a:visited, .menu, .menu:visited
+{
+    cursor: pointer;
+    background-color: #9374CB;
+    color: White;
+    text-decoration: none;
+    padding: 4px 8px 4px 8px;
+    border: 1px solid #8A67C5;
+    margin-right: 4px;
+}
+
+    #menu a:hover, .menu:hover
+    {
+        background-color: #0D9EEC;
+        border: 1px solid #0C89CD;
+        color: White;
+    }
+
+.error
+{
+    font-weight: bold;
+    font-size: 16px;
+    color: #CC3300;
+}
+
+
+h1, h2, h3, h4, h5
+{
+    font-weight: lighter;
+    color: #000099;
+    cursor: pointer;
+}
+
+h1
+{
+    font-size: 28px;
+}
+
+h2
+{
+    font-size: 24px;
+}
+
+h3
+{
+    font-size: 20px;
+}
+
+h4
+{
+    font-size: 18px;
+}
+
+h5
+{
+    font-size: 16px;
+}
+
+    h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, a:hover, .menu-panel a:hover
+    {
+        color: #CC3300;
+    }
+
+.hr
+{
+    border: 1px dotted #C0C0C0;
+    border-top: 0px;
+}
+
+
+.menu-panel
+{
+    font-size: 11px;
+    width: 240px;
+    margin: 12px 12px 0px 0px;
+    float: left;
+    cursor: pointer;
+    height: 400px;
+    overflow: auto;
+    border: 1px solid #EFD8FA;
+}
+
+    .menu-panel:hover
+    {
+        background-color: #F8ECFD;
+    }
+
+.menu-header
+{
+    display: block;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: lighter;
+    color: #FFFFFF;
+    background-color: #8765C5;
+}
+
+.menu-panel ul
+{
+    maring: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+.menu-panel a, .menu-panel a:link
+{
+    border-style: dotted;
+    border-width: 1px;
+    border-color: transparent transparent #D7C5EB transparent;
+    display: block;
+    padding: 4px;
+    padding-left: 24px;
+    color: #666666;
+}
+
+    .menu-panel a:hover
+    {
+        color: #FFFFFF;
+        background-color: #8765C5;
+    }
+
+
+#GridPanel
+{
+    border: 1px solid #A89CEB;
+    margin: 0px;
+}
+
+.grid
+{
+    background-color: #fff;
+    border-collapse: collapse;
+    cursor: pointer;
+}
+
+    .grid tbody tr:hover, .grid tbody tr.alt:hover
+    {
+        background-image: none;
+        background-color: #E0D7F4;
+    }
+
+    .grid tbody tr th
+    {
+        border-style: none none none solid;
+        border-width: 1px;
+        border-color: #8765C5;
+        height: 18px;
+        padding: 4px;
+        color: #FFFFFF;
+        background-color: #8765C5;
+        padding-left: 12px !important;
+    }
+
+
+table.grid th[scope=col]
+{
+    text-align: left;
+    padding: 4px;
+}
+
+
+.grid a
+{
+    text-decoration: none;
+    color: White;
+}
+
+.grid td
+{
+    font-size: 8pt;
+    height: 24px;
+    vertical-align: middle !important;
+    padding: 2px;
+    padding-left: 8px !important;
+    border: 1px solid #E0D7F4;
+    color: #717171;
+}
+
+
+.grid tbody tr
+{
+    height: 18px;
+}
+
+
+    .grid tbody tr.alt
+    {
+        background: #F5F4FD;
+    }
+
+
+.pager
+{
+    margin: 8px 0px 8px 4px;
+}
+
+    .pager a, .pager span
+    {
+        padding: 4px 8px 4px 8px;
+        border: 1px solid #D0D5E8;
+        background-color: #F1F1F8;
+    }
+
+        .pager a:hover, .pager span
+        {
+            border-color: #A5ABD3;
+            background-color: #D6D3E4;
+            color: #336699 !important;
+        }
+
+
+
+::-webkit-scrollbar
+{
+    width: 8px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-button
+{
+    width: 8px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track
+{
+    background: #eee;
+    border: thin solid lightgray;
+    box-shadow: 0px 0px 3px #dfdfdf inset;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: #999;
+    border: thin solid gray;
+    border-radius: 10px;
+}
+
+    ::-webkit-scrollbar-thumb:hover
+    {
+        background: #7d7d7d;
+    }
+
+
+
+.form
+{
+    border: 1px solid #E0DBF2;
+    background-color: #F3F1FA;
+    padding: 12px;
+    width: 670px;
+}
+
+.form-error
+{
+    color: #CC3300;
+    padding: 4px 0px 4px 0px;
+    font-weight: bold;
+}
+
+.form input, .form select, .form textarea
+{
+    outline: none;
+    color: #5A5A87;
+    padding: 2px;
+}
+
+.form input
+{
+    padding: 3px;
+}
+
+.form table tr td
+{
+    padding: 2px!important;
+}
+
+.form textarea, .form input[type="text"], .form input[type="number"], .form input[type="date"], .form select
+{
+    border: 1px solid #E1DBEE;
+    width: 414px;
+}
+
+.form select
+{
+    width: 422px;
+}
+
+
+.form input[type="submit"], .form input[type="reset"], .form input[type="button"]
+{
+    width: 100px;
+}
+
+.form input[type="date"]
+{
+    width: 140px;
+}
+
+.form input[type="radio"], .form input[type="checkbox"]
+{
+    margin: 4px;
+}
+
+.label-cell
+{
+    width: 210px!important;
+}
+
+label
+{
+    cursor: pointer;
+    width: 328px!important;
+}
+
+#menu-table
+{
+    border-collapse: collapse;
+    height: 100%;
+}
+
+    #menu-table td
+    {
+        padding: 0px;
+        margin: 0px;
+        vertical-align: top;
+    }
+
+.menu2
+{
+    border-width: 1px;
+    border-color: #D1D1E0;
+    background-color: #F3F3F8;
+    width: 252px;
+    border-right-style: solid;
+}
+
+.overflowauto
+{
+    overflow: auto;
+}
+
+.menu-title
+{
+    color: #7710BC;
+    font-size: 16px;
+    padding: 8px 0px 2px 0px;
+    padding: 12px;
+    font-weight: bold;
+}
+
+a.sub-menu-anchor, a.sub-menu-anchor:visited
+{
+    display: block;
+    border: 1px solid transparent;
+    color: #666666;
+    padding: 3px;
+    padding-left: 18px;
+}
+
+    a.sub-menu-anchor:hover
+    {
+        background-color: #8765C5;
+        color: White;
+    }
+
+.success
+{
+    color: #009933;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.failure
+{
+    color: #CC3300;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.vpad2
+{
+    display: block;
+    padding: 2px 0px 2px 0px;
+}
+
+.vpad4
+{
+    display: block;
+    padding: 4px 0px 4px 0px!important;
+}
+
+.vpad6
+{
+    display: block;
+    padding: 6px 0px 6px 0px!important;
+}
+
+.vpad8
+{
+    display: block;
+    padding: 8px 0px 8px 0px!important;
+}
+
+.vpad10
+{
+    display: block;
+    padding: 10px 0px 10px 0px!important;
+}
+
+.vpad12
+{
+    display: block;
+    padding: 12px 0px 12px 0px!important;
+}
+
+.vpad14
+{
+    display: block;
+    padding: 14px 0px 14px 0px!important;
+}
+
+
+.vpad16
+{
+    display: block;
+    padding: 16px 0px 16px 0px!important;
+}
+
+/* Todo: Check if still in use. */
+.activeline
+{
+    background-color: #E1E1EC;
+}
+
+#buttons
+{
+    display: block;
+    padding: 6px;
+    position: absolute;
+    z-index: 20;
+    background-color: #D7D5EC;
+}
+
+.form-table td
+{
+    vertical-align: middle!important;
+}
+
+    .form-table
+    {
+        empty-cells:hide;
+    }
+
+.grid2
+{
+    border-collapse: collapse;
+    color: #000000;
+}
+
+    .grid2 td
+    {
+        border: 1px solid #E9DCF1;
+    }
+
+    .grid2 td, .grid2 th
+    {
+        vertical-align: middle !important;
+    }
+
+.grid2-header
+{
+    border: 1px solid #8765C5;
+    height: 30px;
+    background-color: #8765C5;
+    color: #FFFFFF;
+    height: 32px;
+}
+
+.grid3
+{
+    border-collapse: collapse;
+}
+
+    .grid3 td
+    {
+        border: 1px solid transparent;
+    }
+
+    .grid3 input[type="text"], .grid3 input[type="number"], .grid3 select
+    {
+        padding: 2px;
+        border: 1px solid #E9DCF1;
+        height: 18px;
+    }
+
+    .grid3 select
+    {
+        height: 24px;
+    }
+
+
+
+.grid2-footer
+{
+}
+
+.grid2-row td, .grid2-row-alt td
+{
+    padding: 4px!important;
+    padding-left: 8px!important;
+}
+
+.grid2-row-alt
+{
+    background-color: #FBF8FC;
+}
+
+    .grid2-row:hover, .grid2-row-alt:hover
+    {
+        background-color: #EEE9F8;
+    }
+
+.right
+{
+    text-align: right;
+}
+
+.dirty
+{
+    border: 1px solid #FF9933!important;
+}
+
+
+.button
+{
+    margin-left: 2px;
+    padding: 2px;
+}
+
+.title
+{
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: #8C2BCE;
+    cursor: pointer;
+}
+
+.center
+{
+    display: table;
+    margin: 0 auto;
+}
+
+#FormTable
+{
+    margin-top: 4px;
+    border-collapse: collapse!important;
+    border: none!important;
+}
+
+    #FormTable td
+    {
+        padding: 0px 1px 0px 1px;
+        vertical-align: middle;
+    }
+
+.grid4
+{
+    border-collapse: collapse;
+}
+
+    .grid4 tr td
+    {
+        border: 1px solid #CCCCCC;
+        padding: 4px !important;
+        vertical-align: middle !important;
+    }
+
+textarea
+{
+    margin-left: 0px;
+    padding: 4px;
+}
+
+.info
+{
+    cursor: pointer;
+    display: block;
+}
+
+.info
+{
+    padding: 8px;
+    background-color: #C4B4E2;
+}
+
+.pink
+{
+    border: 1px solid #FF97FF;
+    padding: 6px;
+    background-color: #FFBBFF;
+}
+
+.red
+{
+    border: 1px solid #FF7D7D;
+    padding: 6px;
+    background-color: #FFB7B7;
+}
+
+.yellow
+{
+    border: 1px solid #FAD91F;
+    padding: 6px;
+    background-color: #FCEA81;
+}
+
+.purple
+{
+    border: 1px solid #E0B3FF;
+    padding: 6px;
+    background-color: #EFD7FF;
+}
+
+.green
+{
+    border: 1px solid #A3FF46;
+    padding: 6px;
+    background-color: #CCFF99;
+}
+
+.linkblock
+{
+    padding: 4px;
+    border-color: #E1E1E1;
+    border-style: none none dotted none;
+    border-width: 1px;
+    display: block;
+}
+
+.transaction-confirmation
+{
+    width: 250px;
+    border: 1px solid #EEEEEE;
+    padding: 12px;
+    background-color: #F8F8F8;
+}
+
+input.date
+{
+    background: white url(/Resource/Icons/calendar-16.png) no-repeat scroll;
+    background-position: 95% 50%;
+    padding-right: 16px;
+    cursor: pointer;
+}
+
+.description
+{
+    display: block;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px;
+    background-color: #E8D9FF;
+    color: #333333;
+}
+
+    .description:hover
+    {
+        background-color: #E1CEFF;
+        color: #4A1689;
+    }
+
+
+.button
+{
+    -moz-box-shadow: inset 0px 1px 0px 0px #d197fe;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #d197fe;
+    box-shadow: inset 0px 1px 0px 0px #d197fe;
+    background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #a53df6), color-stop(1, #7c16cb) );
+    background: -moz-linear-gradient( center top, #a53df6 5%, #7c16cb 100% );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a53df6', endColorstr='#7c16cb');
+    background-color: #a53df6;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 2px;
+    border: 1px solid #9c33ed;
+    display: inline-block;
+    color: #ffffff!important;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 6px 18px;
+    text-decoration: none;
+    text-shadow: 1px 1px 0px #7d15cd;
+}
+
+    .button:hover
+    {
+        background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #7c16cb), color-stop(1, #a53df6) );
+        background: -moz-linear-gradient( center top, #7c16cb 5%, #a53df6 100% );
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7c16cb', endColorstr='#a53df6');
+        background-color: #7c16cb;
+    }
+
+    .button:active
+    {
+        position: relative;
+        top: 1px;
+    }
+/* This imageless css button was generated by CSSButtonGenerator.com */
+
+.valignmiddle tr td
+{
+    vertical-align: middle!important;
+}
+
+
+.linkbutton
+{
+    color: #9900CC!important;
+}
+
+.item-selector
+{
+    background: url('/Resource/Icons/search-16.png') no-repeat;
+    background-position: 4px 4px;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    outline: none;
+}
+
+.table2
+{
+    border-collapse: collapse;
+}
+
+    .table2 tr
+    {
+    }
+
+    .table2 td
+    {
+        padding: 4px;
+    }
+
+    .table2 .row
+    {
+    }
+
+
+.panel
+{
+    float: left;
+    margin: 4px;
+    border: 1px solid #F1E6FB;
+    width: 100%;
+}
+
+
+.double-panel
+{
+    width: 100%;
+}
+
+
+.panel-title
+{
+    background-color: #F1E6FB;
+    padding: 4px 4px 4px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333333;
+}
+
+.panel-content
+{
+    padding: 12px;
+    line-height: 18px;
+    color: #333333;
+    height: 212px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.double-panel-content
+{
+    height: 424px;
+}
+
+.panel-content ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+    .panel-content ul li:before
+    {
+        content: "\00BB";
+    }
+
+
+.ajax__calendar
+{
+
+}
+
+.ajax__calendar_container
+{
+
+}
+.ajax__calendar_other div
+{
+    color:#E0D7F4!important;
+}
+
+.ajax__calendar_day
+{
+    text-align:center!important;
+}
+
+.ajax__calendar br
+{
+}
+
+.ajax__calendar td
+{
+    vertical-align:middle!important;
+}
+
+.ajax__calendar_month, .ajax__calendar_year
+{
+    height:36px!important;
+    width:36px!important;
+    text-align:center!important;
+    vertical-align:middle!important;
+}
+
+.ajax__calendar_active div, .ajax__calendar_hover div
+{
+    border-color:#9900CC!important;
+    background-color: #9900CC!important;
+    color: #FFFFFF!important;
+}
+
+

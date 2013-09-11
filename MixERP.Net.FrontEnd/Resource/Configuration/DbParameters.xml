@@ -1,0 +1,23 @@
+﻿<?xml version="1.0"?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+
+<MixERPDbParameters>
+    <add key="AccountDisplayField" value="account_code + ' (' + account_name + ')'" />
+    <add key="AgentDisplayField" value="agent_code + ' (' + agent_name + ')'" />
+    <add key="CashRepositoryDisplayField" value="cash_repository_code + ' (' + cash_repository_name + ')'" />
+    <add key="CostCenterDisplayField" value="cost_center_code + ' (' + cost_center_name + ')'" />
+    <add key="CustomerDisplayField" value="last_name + ', ' + fist_name + ' ' + middle_name" />
+    <add key="PartyDisplayField" value="party_code + ' (' + party_name + ')'" />
+    <add key="PriceTypeDisplayField" value="price_type_code + ' (' + price_type_name + ')'" />
+    <add key="ShipperDisplayField" value="company_name" />
+    <add key="StoreDisplayField" value="store_name" />
+    <add key="UnitDisplayField" value="unit_name" />
+    <add key="ShippingAddressDisplayField" value="address_line_1 + convert(13,System.Char) + address_line_2 + convert(13,System.Char) + street + ', ' + city + convert(13,System.Char) + state + ', ' + country" />
+</MixERPDbParameters>

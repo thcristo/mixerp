@@ -1,0 +1,30 @@
+﻿<%-- 
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+--%>
+
+<%@ Master Language="C#" MasterPageFile="~/MixErpMaster.Master" AutoEventWireup="true"
+    CodeBehind="MenuMaster.Master.cs" Inherits="MixERP.Net.FrontEnd.MenuMaster" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="ScriptContentPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="ScriptContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="StyleSheetContentPlaceHolder" runat="server">
+    <asp:ContentPlaceHolder ID="StyleSheetContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
+    <div class="content">
+        <asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</asp:Content>
+<asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder"
+    runat="server">
+    <asp:ContentPlaceHolder ID="BottomScriptContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+</asp:Content>

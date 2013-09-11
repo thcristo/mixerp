@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+
+<Dictionary>
+    <Words>
+        <Unrecognized>
+            <Word>cb</Word>
+        </Unrecognized>
+        <Recognized>
+            <Word>MixERP</Word>
+            <Word>Eval</Word>
+            <Word>Pes</Word>
+            <Word>Sha</Word>
+        </Recognized>
+    </Words>
+    <Acronyms>
+        <CasingExceptions>
+            <Acronym>ERP</Acronym>
+        </CasingExceptions>
+    </Acronyms>
+</Dictionary>

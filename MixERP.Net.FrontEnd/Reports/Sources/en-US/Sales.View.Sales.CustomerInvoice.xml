@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+<PesReport>
+    <Title>{Resources.Titles.SalesInvoice}</Title>
+    <TopSection>
+        <table class="table horizontal">
+            <tr>
+                <td>{Resources.Titles.TransactionDate}</td>
+                <td>{DataSource[0].transaction_ts}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.ValueDate}</td>
+                <td>{DataSource[0].value_date}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.DueDate}</td>
+                <td> {DataSource[0].due_date}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.EnteredBy}</td>
+                <td> {DataSource[0].entered_by}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.TransactionStatus}</td>
+                <td> {DataSource[0].status}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.CustomerPanNumber}</td>
+                <td>{DataSource[0].pan_number}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.CustomerCode}</td>
+                <td>{DataSource[0].party_code}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.CustomerName}</td>
+                <td>{DataSource[0].party_name}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.DeliverTo}</td>
+                <td>{DataSource[0].shipping_address}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.Shipper}</td>
+                <td>{DataSource[0].shipper_name}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.ShippingCharge}</td>
+                <td>{DataSource[0].shipping_charge}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.InvoiceAmount}</td>
+                <td>{DataSource[0].invoice_amount}</td>
+            </tr>
+            <tr>
+                <td>
+                    {Resources.Titles.StatementReference}
+                </td>
+                <td>
+                    {DataSource[0].statement_reference}
+                </td>
+            </tr>
+        </table>
+
+        <br />
+    </TopSection>
+    <Body>
+        <Content>
+            <h2>{Resources.Titles.InvoiceDetails}</h2>
+        </Content>
+        <GridViews>
+            <GridView>
+                <GridViewDataSource>
+                    1
+                </GridViewDataSource>
+            </GridView>
+        </GridViews>
+    </Body>
+    <BottomSection>
+
+
+    </BottomSection>
+    <DataSources>
+        <DataSource>
+            <Query>
+                SELECT
+                transactions.transaction_master.transaction_ts,
+                transactions.transaction_master.value_date,
+                office.users.user_name AS entered_by,
+                core.verification_statuses.verification_status_name AS status,
+                CASE is_credit
+                WHEN false THEN NULL
+                ELSE
+                transactions.transaction_master.value_date + core.parties.maximum_credit_period
+                END AS due_date,
+                transactions.transaction_master.statement_reference,
+                core.parties.party_code,
+                core.parties.party_name,
+                core.parties.pan_number,
+                core.shipping_addresses.address_line_1 || '&lt;br /&gt;' || core.shipping_addresses.address_line_2 || '&lt;br /&gt;' || core.shipping_addresses.street || '&lt;br /&gt;' || core.shipping_addresses.city || '&lt;br /&gt;' || core.shipping_addresses.state || '&lt;br /&gt;' || core.shipping_addresses.country AS shipping_address,
+                core.shippers.shipper_name,
+                transactions.stock_master.shipping_charge,
+                transactions.get_invoice_amount(transactions.transaction_master.transaction_master_id) AS invoice_amount
+                FROM transactions.transaction_master
+                INNER JOIN transactions.stock_master
+                ON transactions.transaction_master.transaction_master_id=transactions.stock_master.transaction_master_id
+                INNER JOIN office.users
+                ON transactions.transaction_master.user_id = office.users.user_id
+                INNER JOIN core.verification_statuses
+                ON transactions.transaction_master.verification_status_id = core.verification_statuses.verification_status_id
+                INNER JOIN core.parties
+                ON transactions.stock_master.party_id=core.parties.party_id
+                LEFT JOIN core.shippers
+                ON transactions.stock_master.shipper_id = core.shippers.shipper_id
+                LEFT JOIN core.shipping_addresses
+                ON transactions.stock_master.shipping_address_id = core.shipping_addresses.shipping_address_id
+                WHERE transactions.transaction_master.transaction_master_id=@transaction_master_id;
+            </Query>
+            <Parameters>
+                <Parameter Name="@transaction_master_id" Type="Number" />
+            </Parameters>
+        </DataSource>
+        <DataSource>
+            <Query>
+                SELECT
+                core.items.item_code,
+                core.items.item_name,
+                transactions.stock_details.quantity,
+                core.units.unit_name,
+                transactions.stock_details.price,
+                transactions.stock_details.price * transactions.stock_details.quantity AS amount,
+                transactions.stock_details.discount,
+                (transactions.stock_details.price * transactions.stock_details.quantity) - transactions.stock_details.discount AS sub_total,
+                transactions.stock_details.tax,
+                (transactions.stock_details.price * transactions.stock_details.quantity) - transactions.stock_details.discount + transactions.stock_details.tax AS total
+                FROM
+                transactions.stock_details
+                INNER JOIN
+                core.items
+                ON transactions.stock_details.item_id = core.items.item_id
+                INNER JOIN
+                core.units
+                ON transactions.stock_details.unit_id = core.units.unit_id
+                WHERE
+                stock_master_id =
+                (
+                select transactions.stock_master.stock_master_id
+                FROM transactions.stock_master
+                WHERE transactions.stock_master.transaction_master_id=@transaction_master_id
+                )
+                ORDER BY stock_master_detail_id;
+            </Query>
+            <Parameters>
+                <Parameter Name="@transaction_master_id" Type="Number" />
+            </Parameters>
+            <RunningTotalTextColumnIndex>3</RunningTotalTextColumnIndex>
+            <RunningTotalFieldIndices>5,6,7,8,9</RunningTotalFieldIndices>
+            <DecimalFieldIndices>4,5,6,7,8,9</DecimalFieldIndices>
+        </DataSource>
+    </DataSources>
+    <Install>
+        <Query>
+            DO
+            $$
+            BEGIN
+            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SAR-SVSI') THEN
+            INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
+            SELECT 'View Sales Inovice', '/Reports/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR');
+            END IF;
+            END
+            $$
+            LANGUAGE plpgsql;
+        </Query>
+    </Install>
+</PesReport>

@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) Binod Nepal, Planet Earth Solutions Pvt. Ltd., Kathmandu.
+  Released under the terms of the GNU General Public License, GPL, 
+  as published by the Free Software Foundation, either version 3 
+  of the License, or (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+    See the License here <http://www.gnu.org/licenses/gpl-3.0.html>.
+-->
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+    <connectionStrings />
+    <appSettings>
+        <add key="Server" value="localhost" />
+        <add key="Database" value="mixerp" />
+        <add key="UserId" value="postgres" />
+        <add key="Password" value="binod" />
+        <add key="DisplayError" value="true" />
+    </appSettings>
+    <system.web>
+        <compilation debug="true" targetFramework="4.0" />
+        <sessionState timeout="259200" />
+        <authentication mode="Forms">
+            <forms loginUrl="~/SignIn.aspx" timeout="2880" defaultUrl="~/Account/Index.aspx" />
+        </authentication>
+        <pages theme="MixERP" enableViewState="false" enableEventValidation="false" enableViewStateMac="false" clientIDMode="Static" controlRenderingCompatibilityVersion="4.0">
+            <controls>
+                <add tagPrefix="webdiyer" namespace="Wuqi.Webdiyer" assembly="AspNetPager" />
+                <add tagPrefix="pes" tagName="Form" src="~/UserControls/Forms/FormControl.ascx" />
+                <add tagPrefix="pes" tagName="Product" src="~/UserControls/Products/ProductControl.ascx" />
+                <add tagPrefix="pes" tagName="DateTextBox" src="~/UserControls/DateTextBox.ascx" />
+                <add tagPrefix="ajaxToolkit" assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" />
+            </controls>
+        </pages>
+        <membership>
+            <providers>
+                <clear />
+                <add name="AspNetSqlMembershipProvider" type="System.Web.Security.SqlMembershipProvider" connectionStringName="ApplicationServices" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="false" requiresUniqueEmail="false" maxInvalidPasswordAttempts="5" minRequiredPasswordLength="6" minRequiredNonalphanumericCharacters="0" passwordAttemptWindow="10" applicationName="/" />
+            </providers>
+        </membership>
+        <profile>
+            <providers>
+                <clear />
+                <add name="AspNetSqlProfileProvider" type="System.Web.Profile.SqlProfileProvider" connectionStringName="ApplicationServices" applicationName="/" />
+            </providers>
+        </profile>
+        <roleManager enabled="false">
+            <providers>
+                <clear />
+                <add name="AspNetSqlRoleProvider" type="System.Web.Security.SqlRoleProvider" connectionStringName="ApplicationServices" applicationName="/" />
+                <add name="AspNetWindowsTokenRoleProvider" type="System.Web.Security.WindowsTokenRoleProvider" applicationName="/" />
+            </providers>
+        </roleManager>
+        <webServices>
+            <protocols>
+                <add name="HttpGet"/>
+                <add name="HttpPost"/>
+            </protocols>
+        </webServices>
+    </system.web>
+    <system.web.extensions>
+        <scripting>
+            <webServices>
+                <jsonSerialization maxJsonLength="5000000" />
+            </webServices>
+        </scripting>
+    </system.web.extensions>
+    <system.webServer>
+        <modules runAllManagedModulesForAllRequests="true">
+            
+        </modules>
+    </system.webServer>
+</configuration>

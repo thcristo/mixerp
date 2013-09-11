@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+
+<MixERPParameters>
+    <add key="PartyName" value="FirstName MiddleName LastName" />
+    <add key="ShortDateFormat" value="d/M/yyyy" />
+    <add key="LongDateFormat" value="d/M/yyyy HH:mm:ss" />
+    <add key="ShortTimeFormat" value="HH:mm:ss" />
+    <add key="LongTimeFormat" value="HH:mm:ss" />
+    <add key="ThousandSeparator" value="." />
+    <add key="DecimalSeparator" value="," />
+    <add key="DecimalPlaces" value="2" />
+    <add key="CurrencySymbol" value="$" />
+</MixERPParameters>

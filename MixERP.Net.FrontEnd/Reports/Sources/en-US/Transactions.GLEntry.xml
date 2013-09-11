@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+<PesReport>
+    <Title>{Resources.Titles.GLAdvice}</Title>
+    <TopSection>
+        <table class="table horizontal">
+            <tr>
+                <td>{Resources.Titles.OfficeCode}</td>
+                <td>{DataSource[0].office_code}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.TranCode}</td>
+                <td>{DataSource[0].transaction_code}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.ReferenceNumber}</td>
+                <td>{DataSource[0].reference_number}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.Book}</td>
+                <td>{DataSource[0].book}</td>
+            </tr>
+        </table>
+        <br />
+    </TopSection>
+    <Body>
+        <Content>
+            <h2>{Resources.Titles.GLDetails}</h2>
+        </Content>
+        <GridViews>
+            <GridView>
+                <GridViewDataSource>
+                    1
+                </GridViewDataSource>
+            </GridView>
+        </GridViews>
+    </Body>
+    <BottomSection>
+        <h2>{Resources.Titles.TransactionDetails}</h2>
+        <table class="table horizontal">
+            <tr>
+                <td>{Resources.Titles.TransactionDate}</td>
+                <td>{DataSource[0].transaction_ts}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.ValueDate}</td>
+                <td>{DataSource[0].value_date}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.EnteredBy}</td>
+                <td>{DataSource[0].entered_by}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.TransactionStatus}</td>
+                <td> {DataSource[0].status}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.VerifiedBy}</td>
+                <td> {DataSource[0].verified_by}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.VerificationReason}</td>
+                <td> {DataSource[0].verification_reason}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.CostCenter}</td>
+                <td>{DataSource[0].cost_center_name}</td>
+            </tr>
+        </table>
+    </BottomSection>
+    <DataSources>
+        <DataSource>
+            <Query>
+                SELECT
+                office.offices.office_code,
+                transactions.transaction_master.transaction_code,
+                transactions.transaction_master.reference_number,
+                transactions.transaction_master.book,
+                transactions.transaction_master.transaction_ts,
+                transactions.transaction_master.value_date,
+                office.users.user_name AS entered_by,
+                core.verification_statuses.verification_status_name AS status,
+                verified_by_user.user_name AS verified_by,
+                transactions.transaction_master.verification_reason,
+                office.cost_centers.cost_center_name
+                FROM transactions.transaction_master
+                INNER JOIN office.offices
+                ON transactions.transaction_master.office_id = office.offices.office_id
+                INNER JOIN core.verification_statuses
+                ON transactions.transaction_master.verification_status_id = core.verification_statuses.verification_status_id
+                INNER JOIN office.users
+                ON transactions.transaction_master.user_id=office.users.user_id
+                LEFT JOIN office.cost_centers
+                ON transactions.transaction_master.cost_center_id = office.cost_centers.cost_center_id
+                LEFT JOIN office.users AS verified_by_user
+                ON transactions.transaction_master.verified_by_user_id = verified_by_user.user_id
+                WHERE transactions.transaction_master.transaction_master_id = @transaction_master_id;
+            </Query>
+            <Parameters>
+                <Parameter Name="@transaction_master_id" Type="Number" />
+            </Parameters>
+        </DataSource>
+        <DataSource>
+            <Query>
+                SELECT
+                core.accounts.account_code,
+                core.accounts.account_name,
+                office.cash_repositories.cash_repository_code || ' (' || office.cash_repositories.cash_repository_name || ')' AS repository,
+                transactions.transaction_details.statement_reference,
+                CASE tran_type
+                WHEN 'Dr' THEN amount
+                ELSE NULL END AS debit,
+                CASE tran_type
+                WHEN 'Cr' THEN amount
+                ELSE NULL END AS credit
+                FROM transactions.transaction_details
+                INNER JOIN
+                core.accounts
+                ON transactions.transaction_details.account_id=core.accounts.account_id
+                LEFT JOIN
+                office.cash_repositories
+                ON transactions.transaction_details.cash_repository_id=office.cash_repositories.cash_repository_id
+                WHERE transactions.transaction_details.transaction_master_id=@transaction_master_id;
+            </Query>
+            <Parameters>
+                <Parameter Name="@transaction_master_id" Type="Number" />
+            </Parameters>
+            <RunningTotalTextColumnIndex>3</RunningTotalTextColumnIndex>
+            <RunningTotalFieldIndices>4,5</RunningTotalFieldIndices>
+        </DataSource>
+    </DataSources>
+    <Install>
+        <Query>
+            DO
+            $$
+            BEGIN
+            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SAR-SVSI') THEN
+            INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
+            SELECT 'View Sales Inovice', '/Reports/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR');
+            END IF;
+            END
+            $$
+            LANGUAGE plpgsql;
+        </Query>
+    </Install>
+</PesReport>

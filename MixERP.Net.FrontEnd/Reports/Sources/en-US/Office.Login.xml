@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+<PesReport>
+    <Title>{Resources.Titles.LoginView}</Title>
+    <TopSection>
+    </TopSection>
+    <Body>
+        <Content>
+            <h2>{Resources.Titles.LoginView}</h2>
+        </Content>
+        <GridViews>
+            <GridView>
+                <GridViewDataSource>
+                    0
+                </GridViewDataSource>
+            </GridView>
+        </GridViews>
+    </Body>
+    <BottomSection>
+    </BottomSection>
+    <DataSources>
+        <DataSource>
+            <Query>
+                SELECT * FROM office.login_view;
+            </Query>
+        </DataSource>
+    </DataSources>
+    <Install>
+        <Query>
+            DO
+            $$
+            BEGIN
+            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SAR-SVSI') THEN
+            INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
+            SELECT 'View Sales Inovice', '/Reports/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR');
+            END IF;
+            END
+            $$
+            LANGUAGE plpgsql;
+        </Query>
+    </Install>
+</PesReport>

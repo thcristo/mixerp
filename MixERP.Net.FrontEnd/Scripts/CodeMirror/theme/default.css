@@ -1,0 +1,43 @@
+.cm-s-default span.cm-keyword {color: #708;}
+.cm-s-default span.cm-atom {color: #219;}
+.cm-s-default span.cm-number
+{
+    color: #0000CC;
+}
+.cm-s-default span.cm-def {color: #00f;}
+.cm-s-default span.cm-variable
+{
+    color: #FF3300;
+}
+.cm-s-default span.cm-variable-2 {color: #05a;}
+.cm-s-default span.cm-variable-3
+{
+    color: #FF3300;
+}
+.cm-s-default span.cm-property {color: black;}
+.cm-s-default span.cm-operator {color: black;}
+.cm-s-default span.cm-comment
+{
+    color: #009100;
+}
+.cm-s-default span.cm-string
+{
+    color: #0E12C5;
+}
+.cm-s-default span.cm-string-2 {color: #f50;}
+.cm-s-default span.cm-meta {color: #555;}
+.cm-s-default span.cm-error {color: #f00;}
+.cm-s-default span.cm-qualifier {color: #555;}
+.cm-s-default span.cm-builtin
+{
+    color: #FF3300;
+}
+.cm-s-default span.cm-bracket {color: #cc7;}
+.cm-s-default span.cm-tag
+{
+    color: #800000;
+}
+.cm-s-default span.cm-attribute
+{
+    color: #E60000;
+}

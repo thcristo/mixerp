@@ -1,0 +1,90 @@
+﻿<%-- 
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+--%>
+
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MixErpMaster.Master.cs"
+    Inherits="MixERP.Net.FrontEnd.MixErpMaster" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <link href="~/themes/purple/main.css" rel="stylesheet" type="text/css" runat="server" />
+    <script src="/Scripts/jquery.min.js" type="text/javascript"></script>
+    <script src="/Scripts/shortcut.js"></script>
+    <script src="/Scripts/colorbox/jquery.colorbox-min.js"></script>
+    <script src="/Scripts/jqueryNumber/jquery.number.min.js"></script>
+    <script src="/Scripts/date.js"></script>
+    <link href="/Scripts/colorbox/colorbox.css" rel="stylesheet" />
+    <title>MixErp® Beta</title>
+    <asp:ContentPlaceHolder ID="ScriptContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="StyleSheetContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <!--[if IE]>
+        <style>
+        .grid3 td
+        {
+            padding-left:1px!important;
+        }
+        </style>
+    <![endif]-->
+
+</head>
+<body>
+    <script type="text/javascript">
+        var today = "<%= System.DateTime.Now.ToShortDateString() %>";
+        var shortDateFormat = "<%= MixERP.Net.Common.Helpers.Parameters.ShortDateFormat() %>";
+        var thousandSeparator = "<%= MixERP.Net.Common.Helpers.Parameters.ThousandSeparator() %>";
+        var decimalSeparator = "<%= MixERP.Net.Common.Helpers.Parameters.DecimalSeparator() %>";
+        var decimalPlaces = "<%= MixERP.Net.Common.Helpers.Parameters.DecimalPlaces() %>";
+    </script>
+    <script src="/Scripts/mixerp.js" type="text/javascript"></script>
+
+    <form id="form1" runat="server" enctype="multipart/form-data" method="post" submitdisabledcontrols="true" defaultbutton="SwallowSubmitButton">
+    <div id="page">
+        <a href="/Dashboard/Index.aspx">
+            <img src="/themes/purple/mixerp-logo.png" height="50" width="250" />
+        </a>
+        <div id="menu">
+            <asp:Literal ID="MenuLiteral" runat="server" />
+            <div style="float: right; padding-right: 24px;">
+                <a href="/Account/SignOut.aspx">Sign Out</a>
+                <a href="/Account/ChangePassword.aspx">Change Password</a>
+            </div>
+        </div>
+        <div id="content">
+            <asp:ContentPlaceHolder ID="BodyContentPlaceHolder" runat="server">
+            </asp:ContentPlaceHolder>
+            <asp:Button ID="SwallowSubmitButton" runat="server" OnClientClick="return(false);" Style="display: none;" />
+        </div>
+        <div id="footer">
+            Powered by
+            <a href="http://MixERP.Net" target="_blank">MixErp® Beta</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //Todo:Document this
+        jQuery(document).bind("keyup keydown", function (e) {
+            if (e.ctrlKey && e.keyCode == 80) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        function pageLoad(sender, args) {
+            $(".item-selector").colorbox({ iframe: true, innerWidth: 1024, innerHeight: 450, overlayClose: false });
+        }
+
+
+
+    </script>
+    <asp:ContentPlaceHolder ID="BottomScriptContentPlaceHolder" runat="server">
+    </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

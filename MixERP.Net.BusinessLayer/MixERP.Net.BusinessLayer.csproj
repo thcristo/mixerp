@@ -62,6 +62,7 @@
     <Compile Include="Core\Accounts.cs" />
     <Compile Include="Core\Agents.cs" />
     <Compile Include="Core\Customers.cs" />
+    <Compile Include="Core\Date.cs" />
     <Compile Include="Core\Parties.cs" />
     <Compile Include="Core\Items.cs" />
     <Compile Include="Core\Menu.cs" />

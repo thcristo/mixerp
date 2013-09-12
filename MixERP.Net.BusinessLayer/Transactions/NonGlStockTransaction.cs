@@ -50,9 +50,9 @@ namespace MixERP.Net.BusinessLayer.Transactions
             return nonGlStockMasterId;
         }
 
-        public static System.Data.DataTable GetView(string book)
+        public static System.Data.DataTable GetView(string book, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.GetView(MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), book);
+            return MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.GetView(book, MixERP.Net.BusinessLayer.Helpers.SessionHelper.OfficeId(), dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference);
         }
     }
 }

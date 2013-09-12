@@ -1124,9 +1124,11 @@
     <Content Include="Resource\Icons\email-16.png" />
     <Content Include="Resource\Icons\excel-16.png" />
     <Content Include="Resource\Icons\filter-16.png" />
+    <Content Include="Resource\Icons\password-16.png" />
     <Content Include="Resource\Icons\pdf-16.png" />
     <Content Include="Resource\Icons\print-16.png" />
     <Content Include="Resource\Icons\search-16.png" />
+    <Content Include="Resource\Icons\signout-16.png" />
     <Content Include="Resource\Icons\top-16.png" />
     <Content Include="Resource\Icons\word-16.png" />
     <Content Include="Resource\TempImages\index.html" />

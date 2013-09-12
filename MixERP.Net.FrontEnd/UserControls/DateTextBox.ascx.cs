@@ -30,7 +30,8 @@ namespace MixERP.Net.FrontEnd.UserControls
             }
         }
         public bool EnableValidation { get; set; }
-        public string CssClass {
+        public string CssClass
+        {
             get
             {
                 return TextBox1.CssClass;
@@ -63,16 +64,37 @@ namespace MixERP.Net.FrontEnd.UserControls
                 TextBox1.Width = value;
             }
         }
-        protected void Page_Init(object sender, EventArgs e)
+
+        public MixERP.Net.BusinessLayer.Core.DateEnums Mode { get; set; }
+
+        private void SetDate()
         {
-            TextBox1.ID = this.ID;
-            
             if(string.IsNullOrEmpty(this.text))
             {
-                this.text = DateTime.Now.ToShortDateString();
+                switch(this.Mode)
+                {
+                    case BusinessLayer.Core.DateEnums.Today:
+                        this.text = DateTime.Now.ToShortDateString();
+                        break;
+                    case BusinessLayer.Core.DateEnums.MonthStartDate:
+                        this.text = MixERP.Net.Common.Helpers.DateHelper.GetMonthStartDate(DateTime.Now).ToShortDateString();
+                        break;
+                    case BusinessLayer.Core.DateEnums.MonthEndDate:
+                        this.text = MixERP.Net.Common.Helpers.DateHelper.GetMonthEndDate(DateTime.Now).ToShortDateString();
+                        break;
+                    default:
+                        throw new InvalidOperationException("Not implemented yet.");
+                }
             }
-            
+
+        }
+        protected void Page_Init(object sender, EventArgs e)
+        {
+            this.SetDate();
             TextBox1.Text = this.text;
+
+            TextBox1.ID = this.ID;
+
             CalendarExtender1.ID = this.ID + "CalendarExtender";
             CalendarExtender1.Format = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
             CalendarExtender1.TodaysDateFormat = CultureInfo.CurrentCulture.DateTimeFormat.LongDatePattern;

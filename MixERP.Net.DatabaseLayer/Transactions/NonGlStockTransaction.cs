@@ -113,51 +113,25 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         throw;
                     }
                 }
-
-                return 0;
             }
         }
 
-        public static System.Data.DataTable GetView(int officeId, string book)
+        public static System.Data.DataTable GetView(string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            string sql = @"WITH RECURSIVE office_cte(office_id) AS 
-                        (
-	                        SELECT @OfficeId
-	                        UNION ALL
-	                        SELECT
-		                        c.office_id
-	                        FROM 
-                                office_cte AS p, 
-                                office.offices AS c 
-                            WHERE 
-                                parent_office_id = p.office_id
-                        )
-                        SELECT
-	                        transactions.non_gl_stock_master.non_gl_stock_master_id AS id,
-	                        transactions.non_gl_stock_master.value_date,
-	                        office.offices.office_code AS office,
-	                        core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
-	                        core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
-	                        transactions.non_gl_stock_master.transaction_ts,
-	                        office.users.user_name AS user,
-	                        transactions.non_gl_stock_master.reference_number,
-	                        transactions.non_gl_stock_master.statement_reference
-                        FROM transactions.non_gl_stock_master
-                        INNER JOIN core.parties
-                        ON transactions.non_gl_stock_master.party_id = core.parties.party_id
-                        INNER JOIN core.price_types
-                        ON transactions.non_gl_stock_master.price_type_id = core.price_types.price_type_id
-                        INNER JOIN office.users
-                        ON transactions.non_gl_stock_master.user_id = office.users.user_id
-                        INNER JOIN office.offices
-                        ON transactions.non_gl_stock_master.office_id = office.offices.office_id
-                        WHERE transactions.non_gl_stock_master.book = @Book
-                        AND office.offices.office_id IN (SELECT office_id FROM office_cte);";
+            string sql = "SELECT * FROM transactions.get_product_view(@Book::text, @OfficeId::integer, @DateFrom::date, @DateTo::date, @Office::national character varying(12), @Party::text, @PriceType::text, @User::national character varying(50), @ReferenceNumber::national character varying(24), @StatementReference::text);";
 
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
-                command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@Book", book);
+                command.Parameters.AddWithValue("@OfficeId", officeId);
+                command.Parameters.AddWithValue("@DateFrom", dateFrom);
+                command.Parameters.AddWithValue("@DateTo", dateTo);
+                command.Parameters.AddWithValue("@Office", office);
+                command.Parameters.AddWithValue("@Party", party);
+                command.Parameters.AddWithValue("@PriceType", priceType);
+                command.Parameters.AddWithValue("@User", user);
+                command.Parameters.AddWithValue("@ReferenceNumber", referenceNumber);
+                command.Parameters.AddWithValue("@StatementReference", statementReference);
 
                 return MixERP.Net.DatabaseLayer.DBFactory.DBOperations.GetDataTable(command);
             }

@@ -52,9 +52,13 @@ http://mozilla.org/MPL/2.0/.
         </a>
         <div id="menu">
             <asp:Literal ID="MenuLiteral" runat="server" />
-            <div style="float: right; padding-right: 24px;">
-                <a href="/Account/SignOut.aspx">Sign Out</a>
-                <a href="/Account/ChangePassword.aspx">Change Password</a>
+            <div style="float: right;">
+                <a href="/Account/SignOut.aspx" class="icon">
+                    <img src="/Resource/Icons/signout-16.png" />
+                </a>
+                <a href="/Account/ChangePassword.aspx" class="icon">
+                    <img src="/Resource/Icons/password-16.png" />
+                </a>
             </div>
         </div>
         <div id="content">

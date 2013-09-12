@@ -1,7 +1,4 @@
-﻿
-
-
-DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
+﻿DROP FUNCTION IF EXISTS office.can_login(user_id integer_strict, office_id integer_strict);
 CREATE FUNCTION office.can_login(user_id integer_strict, office_id integer_strict)
 RETURNS boolean
 AS
@@ -635,6 +632,132 @@ BEGIN
 	AND tran_type='Cr';
 
 	RETURN _debit - _credit;
+END
+$$
+LANGUAGE plpgsql;
+
+
+DROP FUNCTION IF EXISTS transactions.get_product_view
+(
+	text,
+	date, 
+	date, 
+	national character varying(12),
+	text,	
+	text,
+	national character varying(50),
+	national character varying(24),
+	text
+);
+
+DROP FUNCTION IF EXISTS transactions.get_product_view
+(	
+	book_					text,
+	office_id_				integer,
+	date_from_				date, 
+	date_to_				date, 
+	office_					national character varying(12),
+	party_					text,	
+	price_type_				text,
+	user_					national character varying(50),
+	reference_number_			national character varying(24),
+	statement_reference_			text
+ );
+
+CREATE FUNCTION transactions.get_product_view
+(	
+	book_					text,
+	office_id_				integer,
+	date_from_				date, 
+	date_to_				date, 
+	office_					national character varying(12),
+	party_					text,	
+	price_type_				text,
+	user_					national character varying(50),
+	reference_number_			national character varying(24),
+	statement_reference_			text
+ )
+RETURNS TABLE
+(
+	id					bigint,
+	value_date				date,
+	office					national character varying(12),
+	party					text,
+	price_type				text,
+	transaction_ts				TIMESTAMP WITH TIME ZONE,
+	"user"					national character varying(50),
+	reference_number			national character varying(24),
+	statement_reference			text
+)
+AS
+$$
+BEGIN
+	RETURN QUERY 
+	WITH RECURSIVE office_cte(office_id) AS 
+	(
+		SELECT office_id_
+		UNION ALL
+		SELECT
+			c.office_id
+		FROM 
+		office_cte AS p, 
+		office.offices AS c 
+	    WHERE 
+		parent_office_id = p.office_id
+	)
+
+	SELECT
+		transactions.non_gl_stock_master.non_gl_stock_master_id AS id,
+		transactions.non_gl_stock_master.value_date,
+		office.offices.office_code AS office,
+		core.parties.party_code || ' (' || core.parties.party_name || ')' AS party,
+		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')' AS price_type,
+		transactions.non_gl_stock_master.transaction_ts,
+		office.users.user_name AS user,
+		transactions.non_gl_stock_master.reference_number,
+		transactions.non_gl_stock_master.statement_reference
+	FROM transactions.non_gl_stock_master
+	INNER JOIN core.parties
+	ON transactions.non_gl_stock_master.party_id = core.parties.party_id
+	INNER JOIN core.price_types
+	ON transactions.non_gl_stock_master.price_type_id = core.price_types.price_type_id
+	INNER JOIN office.users
+	ON transactions.non_gl_stock_master.user_id = office.users.user_id
+	INNER JOIN office.offices
+	ON transactions.non_gl_stock_master.office_id = office.offices.office_id
+	WHERE transactions.non_gl_stock_master.book = book_
+	AND transactions.non_gl_stock_master.value_date BETWEEN date_from_ AND date_to_
+	AND 
+	lower
+	(
+		core.parties.party_code || ' (' || core.parties.party_name || ')'
+	) LIKE '%' || lower(party_) || '%'
+	AND
+	lower
+	(
+		core.price_types.price_type_code || ' (' || core.price_types.price_type_name || ')'
+	) LIKE '%' || lower(price_type_) || '%'
+	AND 
+	lower
+	(
+		office.users.user_name
+	)  LIKE '%' || lower(user_) || '%'
+	AND 
+	lower
+	(
+		transactions.non_gl_stock_master.reference_number
+	) LIKE '%' || lower(reference_number_) || '%'
+	AND 
+	lower
+	(
+		transactions.non_gl_stock_master.statement_reference
+	) LIKE '%' || lower(statement_reference_) || '%'	
+	AND lower
+	(
+		office.offices.office_code
+	) LIKE '%' || lower(office_) || '%'	
+	AND office.offices.office_id IN (SELECT office_id FROM office_cte)
+	LIMIT 100;
 END
 $$
 LANGUAGE plpgsql;

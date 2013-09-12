@@ -57,6 +57,7 @@
     <Compile Include="Conversion.cs" />
     <Compile Include="ExceptionManager.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Helpers\DateHelper.cs" />
     <Compile Include="Helpers\ExpressionHelper.cs" />
     <Compile Include="Helpers\LocalizationHelper.cs" />
     <Compile Include="Helpers\Parameters.cs" />

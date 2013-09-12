@@ -102,7 +102,7 @@ input, select
 {
     background-color: #8765C5;
     width: 100%;
-    padding: 12px 8px 12px 8px;
+    padding: 12px 0px 12px 16px;
     font-weight: bold;
     height: 14px;
 }
@@ -142,6 +142,14 @@ input, select
         background-color: #0D9EEC;
         border: 1px solid #0C89CD;
         color: White;
+    }
+
+    #menu a.icon
+    {
+        padding:16px 4px 7px 7px;
+        width:24px;
+        height:24px;
+        margin:0px;
     }
 
 .error

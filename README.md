@@ -13,14 +13,14 @@ MixERP is an ASP.net open source ERP Solution.
 
 
 **Useful Links**
-* [MixERP Demo Website] (http://demo.mixerp.org/SignIn.aspx)
-* [MixERP Documentation](https://github.com/binodnp/mixerp/wiki/documentation)
-* [Contribution Guidelines] (wiki/contribution-guidelines)
+* <a href="http://demo.mixerp.org/SignIn.aspx" target="_blank">MixERP Demo Website</a>
+* [MixERP Documentation](https://github.com/mixerp/mixerp/wiki/documentation)
+* [Contribution Guidelines] (https://github.com/mixerp/mixerp/wiki/contribution-guidelines)
 * [About MixERP] (https://github.com/binodnp/mixerp/wiki)
-* [Project Website] (http://mixerp.org/)
-* [Follow MixERP on Facebook] (http://facebook.com/mixoferp/)
-* [Facebook Discussions Group] (http://www.facebook.com/groups/183076085203506/)
-* [Follow MixERP on Twitter] (http://twitter.com/mixoferp/)
-* [Community Forum] (http://mixerp.org/forum/)
+* <a href="http://mixerp.org/" target="_blank">Project Website</a>
+* <a href="http://facebook.com/mixoferp/" target="_blank">Follow MixERP on Facebook</a>
+* <a href="http://www.facebook.com/groups/183076085203506/" target="_blank">Facebook Discussions Group</a>
+* <a href="http://twitter.com/mixoferp/" target="_blank">Follow MixERP on Twitter</a>
+* <a href="http://mixerp.org/forum/" target="_blank">Community Forum</a>
 
 Please read the file ReadMe.txt on the root directory before asking us questions.

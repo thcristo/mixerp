@@ -25,61 +25,6 @@ namespace MixERP.Net.BusinessLayer.Helpers
             return MixERP.Net.DatabaseLayer.Helpers.ReportHelper.GetDataTable(sql, parameters);
         }
         
-        public static string Parse(string expression)
-        {
-            if(string.IsNullOrWhiteSpace(expression))
-            {
-                return string.Empty;
-            }
-            
-            expression = expression.Replace("{LogoPath}", MixERP.Net.Common.PageUtility.GetCurrentDomainName() + MixERP.Net.Common.PageUtility.ResolveUrl("~/Themes/purple/mixerp-logo-light.png"));
-            expression = expression.Replace("{PrintDate}", System.DateTime.Now.ToString());
-
-            foreach(var match in Regex.Matches(expression, "{.*?}"))
-            {
-                string word = match.ToString();
-
-
-                if(word.StartsWith("{Session.", StringComparison.OrdinalIgnoreCase))
-                {
-                    string sessionKey = RemoveBraces(word);
-                    sessionKey = sessionKey.Replace("Session.", "");
-                    sessionKey = sessionKey.Trim();
-                    expression = expression.Replace(word, GetSessionValue(sessionKey));
-                }
-                else if(word.StartsWith("{Resources.", StringComparison.OrdinalIgnoreCase))
-                {
-                    string res = RemoveBraces(word);
-                    string[] resource = res.Split('.');
-
-                    expression = expression.Replace(word, MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString(resource[1], resource[2]));
-                }
-            }
-
-            return expression;
-        }
-
-        public static string RemoveBraces(string expression)
-        {
-            if(string.IsNullOrWhiteSpace(expression))
-            {
-                return string.Empty;
-            }
-            
-            return expression.Replace("{", "").Replace("}", "");
-        }
-
-        public static string GetSessionValue(string key)
-        {
-            var val = HttpContext.Current.Session[key];
-
-            if(val != null)
-            {
-                return val.ToString();
-            }
-
-            return string.Empty;
-        }
 
         public static Collection<Collection<KeyValuePair<string,string>>> BindParameters(string reportPath, Collection<KeyValuePair<string, string>> parameterCollection)
         {

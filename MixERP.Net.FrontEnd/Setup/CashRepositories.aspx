@@ -20,9 +20,7 @@ http://mozilla.org/MPL/2.0/.
         ViewSchema="office" View="cash_repository_view"
         Text="<%$Resources:Titles, CashRepositories %>"
         DisplayFields="office.cash_repositories.cash_repository_id-->cash_repository_code + ' (' + cash_repository_name + ')', office.offices.office_id-->office_code + ' (' + office_name + ')'"
-        DisplayViews="office.cash_repositories.cash_repository_id-->office.cash_repository_view, office.offices.office_id-->office.office_view"
-        
-        
+        DisplayViews="office.cash_repositories.cash_repository_id-->office.cash_repository_view, office.offices.office_id-->office.office_view"        
          />
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">

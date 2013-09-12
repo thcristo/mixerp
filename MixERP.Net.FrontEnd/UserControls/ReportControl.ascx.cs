@@ -22,7 +22,9 @@ namespace MixERP.Net.FrontEnd.UserControls
 {
     public partial class ReportControl : System.Web.UI.UserControl
     {
-        public string ReportPath { get; set; }
+        private string reportPath;
+        #region "Properties"
+        public string Path { get; set; }
         public bool AutoInitialize { get; set; }
 
         /// <summary>
@@ -31,18 +33,18 @@ namespace MixERP.Net.FrontEnd.UserControls
         /// parameters stored in KeyValuePair.
         /// </summary>
         public Collection<Collection<KeyValuePair<string, string>>> ParameterCollection { get; set; }
-        private string path;
+        #endregion
 
         private bool IsValid()
         {
-            if(string.IsNullOrWhiteSpace(this.ReportPath))
+            if(string.IsNullOrWhiteSpace(this.Path))
             {
                 return false;
             }
 
-            this.path = Server.MapPath(this.ReportPath);
+            this.reportPath = Server.MapPath(this.Path);
 
-            if(!System.IO.File.Exists(this.path))
+            if(!System.IO.File.Exists(this.reportPath))
             {
                 return false;
             }
@@ -65,7 +67,7 @@ namespace MixERP.Net.FrontEnd.UserControls
             {
                 ReportTitleLiteral.Text = Resources.Titles.ReportNotFound;
                 ReportTitleHidden.Value = ReportTitleLiteral.Text;
-                TopSectionLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InvalidLocation, this.path);
+                TopSectionLiteral.Text = string.Format(System.Threading.Thread.CurrentThread.CurrentCulture, Resources.Warnings.InvalidLocation, this.reportPath);
                 return;
             }
 
@@ -80,30 +82,13 @@ namespace MixERP.Net.FrontEnd.UserControls
             this.CleanUp();
         }
 
-        private void CleanUp()
-        {
-            for(int i = 0; i < this.DataTableCollection.Count - 1; i++)
-            {
-                System.Data.DataTable table = this.DataTableCollection[i];
-                if(table != null)
-                {
-                    table.Dispose();
-                    if(table != null)
-                    {
-                        table = null;
-                    }
-                }
-            
-            }
-        }
-
-        private System.Collections.ObjectModel.Collection<string> DecimalFieldIndicesCollection { get; set; }
+        private System.Collections.ObjectModel.Collection<string> DecimalFieldIndicesCollection;
         private void SetDecimalFields()
         {
             string decimalFieldIndices = string.Empty;
 
             //Get the list of datasources for this report.
-            XmlNodeList dataSourceList = XmlHelper.GetNodes(path, "//DataSource");
+            XmlNodeList dataSourceList = XmlHelper.GetNodes(reportPath, "//DataSource");
 
             //Initializing decimal field indices collection.
             this.DecimalFieldIndicesCollection = new System.Collections.ObjectModel.Collection<string>();
@@ -132,12 +117,12 @@ namespace MixERP.Net.FrontEnd.UserControls
             }        
         }
 
-        private System.Collections.ObjectModel.Collection<int> RunningTotalTextColumnIndexCollection { get; set; }
-        private System.Collections.ObjectModel.Collection<string> RunningTotalFieldIndicesCollection { get; set; }
+        private System.Collections.ObjectModel.Collection<int> RunningTotalTextColumnIndexCollection;
+        private System.Collections.ObjectModel.Collection<string> RunningTotalFieldIndicesCollection;
         private void SetRunningTotalFields()
         {
             //Get the list of datasources for this report.
-            XmlNodeList dataSourceList = XmlHelper.GetNodes(path, "//DataSource");
+            XmlNodeList dataSourceList = XmlHelper.GetNodes(reportPath, "//DataSource");
             int runningTotalTextColumnIndex = 0;
             string runningTotalFieldIndices = string.Empty;
 
@@ -181,13 +166,13 @@ namespace MixERP.Net.FrontEnd.UserControls
             }
         }
 
-        private System.Collections.ObjectModel.Collection<System.Data.DataTable> DataTableCollection { get; set; }
+        private System.Collections.ObjectModel.Collection<System.Data.DataTable> DataTableCollection;
         private void SetDataSources()
         {
             int index = 0;
 
             //Get the list of datasources for this report.
-            System.Xml.XmlNodeList dataSources = XmlHelper.GetNodes(path, "//DataSource");
+            System.Xml.XmlNodeList dataSources = XmlHelper.GetNodes(reportPath, "//DataSource");
 
             //Initializing data source collection.
             this.DataTableCollection = new System.Collections.ObjectModel.Collection<System.Data.DataTable>();
@@ -227,8 +212,8 @@ namespace MixERP.Net.FrontEnd.UserControls
 
         private void SetTitle()
         {
-            string title = XmlHelper.GetNodeText(path, "/PesReport/Title");
-            ReportTitleLiteral.Text = MixERP.Net.BusinessLayer.Helpers.ReportHelper.Parse(title);
+            string title = XmlHelper.GetNodeText(reportPath, "/PesReport/Title");
+            ReportTitleLiteral.Text = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(title);
             ReportTitleHidden.Value = ReportTitleLiteral.Text;
 
             if(!string.IsNullOrWhiteSpace(ReportTitleLiteral.Text))
@@ -237,25 +222,33 @@ namespace MixERP.Net.FrontEnd.UserControls
             }
         }
 
+        #region "Set Sections"
         private void SetTopSection()
         {
-            string topSection = XmlHelper.GetNodeText(path, "/PesReport/TopSection");
-            topSection = MixERP.Net.BusinessLayer.Helpers.ReportHelper.Parse(topSection);
-            topSection = ParseDataSource(topSection, this.DataTableCollection);
+            string topSection = XmlHelper.GetNodeText(reportPath, "/PesReport/TopSection");
+            topSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(topSection);
+            topSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseDataSource(topSection, this.DataTableCollection);
             TopSectionLiteral.Text = topSection;
         }
-
         private void SetBodySection()
         {
-            string bodySection = XmlHelper.GetNodeText(path, "/PesReport/Body/Content");
-            bodySection = MixERP.Net.BusinessLayer.Helpers.ReportHelper.Parse(bodySection);
-            bodySection = ParseDataSource(bodySection, this.DataTableCollection);
+            string bodySection = XmlHelper.GetNodeText(reportPath, "/PesReport/Body/Content");
+            bodySection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(bodySection);
+            bodySection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseDataSource(bodySection, this.DataTableCollection);
             ContentLiteral.Text = bodySection;
         }
+        private void SetBottomSection()
+        {
+            string bottomSection = XmlHelper.GetNodeText(reportPath, "/PesReport/BottomSection");
+            bottomSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(bottomSection);
+            bottomSection = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseDataSource(bottomSection, this.DataTableCollection);
+            BottomSectionLiteral.Text = bottomSection;
+        }
+        #endregion
 
         private void SetGridViews()
         {
-            XmlNodeList gridViewDataSource = XmlHelper.GetNodes(path, "//GridViewDataSource");
+            XmlNodeList gridViewDataSource = XmlHelper.GetNodes(reportPath, "//GridViewDataSource");
             string gridSection = string.Empty;
 
             foreach(XmlNode node in gridViewDataSource)
@@ -268,7 +261,6 @@ namespace MixERP.Net.FrontEnd.UserControls
 
             this.LoadGrid(string.Concat(gridSection));
         }
-
         private void LoadGrid(string indices)
         {
             foreach(string data in indices.Split(','))
@@ -277,7 +269,6 @@ namespace MixERP.Net.FrontEnd.UserControls
 
                 if(!string.IsNullOrWhiteSpace(ds))
                 {
-
                     //if(!ds.Contains(' '))
                     //{
                     int index = MixERP.Net.Common.Conversion.TryCastInteger(ds);
@@ -302,14 +293,8 @@ namespace MixERP.Net.FrontEnd.UserControls
 
         }
 
-        private void SetBottomSection()
-        {
-            string bottomSection = XmlHelper.GetNodeText(path, "/PesReport/BottomSection");
-            bottomSection = MixERP.Net.BusinessLayer.Helpers.ReportHelper.Parse(bottomSection);
-            bottomSection = ParseDataSource(bottomSection, this.DataTableCollection);
-            BottomSectionLiteral.Text = bottomSection;
-        }
 
+        #region "GridView Events"
         void GridView_DataBound(object sender, EventArgs e)
         {
             GridView grid = (GridView)sender;
@@ -395,36 +380,9 @@ namespace MixERP.Net.FrontEnd.UserControls
                 }
             }
         }
+        #endregion
 
-        public static string ParseDataSource(string expression, System.Collections.ObjectModel.Collection<System.Data.DataTable> table)
-        {
-            foreach(var match in Regex.Matches(expression, "{.*?}"))
-            {
-                string word = match.ToString();
-
-                if(word.StartsWith("{DataSource", StringComparison.OrdinalIgnoreCase))
-                {
-
-                    int index = MixERP.Net.Common.Conversion.TryCastInteger(word.Split('.').First().Replace("{DataSource[", "").Replace("]", ""));
-                    string column = word.Split('.').Last().Replace("}", "");
-
-                    if(table[index] != null)
-                    {
-                        if(table[index].Rows.Count > 0)
-                        {
-                            if(table[index].Columns.Contains(column))
-                            {
-                                string value = table[index].Rows[0][column].ToString();
-                                expression = expression.Replace(word, value);
-                            }
-                        }
-                    }
-                }
-            }
-
-            return expression;
-        }
-
+        #region "Export Report"
         protected void ExcelImageButton_Click(object sender, ImageClickEventArgs e)
         {
             string html = ReportHidden.Value;
@@ -456,7 +414,24 @@ namespace MixERP.Net.FrontEnd.UserControls
                 Response.Close();
             }
         }
+        #endregion
 
+        private void CleanUp()
+        {
+            for(int i = 0; i < this.DataTableCollection.Count - 1; i++)
+            {
+                System.Data.DataTable table = this.DataTableCollection[i];
+                if(table != null)
+                {
+                    table.Dispose();
+                    if(table != null)
+                    {
+                        table = null;
+                    }
+                }
+
+            }
+        }
 
     }
 

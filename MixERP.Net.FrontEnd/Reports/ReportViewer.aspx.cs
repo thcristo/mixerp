@@ -28,7 +28,7 @@ namespace MixERP.Net.FrontEnd.Reports
             if(collection == null || collection.Count.Equals(0))
             {
                 ReportParameterPanel.Style.Add("display", "none");
-                ReportViewer1.ReportPath = this.ReportPath();
+                ReportViewer1.Path = this.ReportPath();
                 ReportViewer1.InitializeReport();
                 return;
             }
@@ -81,7 +81,7 @@ namespace MixERP.Net.FrontEnd.Reports
                     list.Add(new KeyValuePair<string, string>("@" + textBox.ID.Replace("_text_box", ""), textBox.Text));
                 }
             }
-            ReportViewer1.ReportPath = this.ReportPath();
+            ReportViewer1.Path = this.ReportPath();
             ReportViewer1.ParameterCollection = MixERP.Net.BusinessLayer.Helpers.ReportHelper.BindParameters(Server.MapPath(this.ReportPath()), list);
             ReportViewer1.InitializeReport();
         }

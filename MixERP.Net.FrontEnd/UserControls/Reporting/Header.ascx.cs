@@ -27,7 +27,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Reporting
         protected void Page_Load(object sender, EventArgs e)
         {
             string header = System.IO.File.ReadAllText(Server.MapPath("~/Reports/Assets/Header.html"));
-            html = MixERP.Net.BusinessLayer.Helpers.ReportHelper.Parse(header);
+            html = MixERP.Net.BusinessLayer.Reporting.ReportParser.ParseExpression(header);
             HeaderLiteral.Text = html;
         }
 

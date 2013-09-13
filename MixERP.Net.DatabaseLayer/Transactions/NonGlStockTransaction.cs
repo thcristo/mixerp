@@ -116,12 +116,13 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             }
         }
 
-        public static System.Data.DataTable GetView(string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
+        public static System.Data.DataTable GetView(int userId, string book, int officeId, DateTime dateFrom, DateTime dateTo, string office, string party, string priceType, string user, string referenceNumber, string statementReference)
         {
-            string sql = "SELECT * FROM transactions.get_product_view(@Book::text, @OfficeId::integer, @DateFrom::date, @DateTo::date, @Office::national character varying(12), @Party::text, @PriceType::text, @User::national character varying(50), @ReferenceNumber::national character varying(24), @StatementReference::text);";
+            string sql = "SELECT * FROM transactions.get_product_view(@UserId::integer, @Book::text, @OfficeId::integer, @DateFrom::date, @DateTo::date, @Office::national character varying(12), @Party::text, @PriceType::text, @User::national character varying(50), @ReferenceNumber::national character varying(24), @StatementReference::text);";
 
             using(NpgsqlCommand command = new NpgsqlCommand(sql))
             {
+                command.Parameters.AddWithValue("@UserId", userId);
                 command.Parameters.AddWithValue("@Book", book);
                 command.Parameters.AddWithValue("@OfficeId", officeId);
                 command.Parameters.AddWithValue("@DateFrom", dateFrom);

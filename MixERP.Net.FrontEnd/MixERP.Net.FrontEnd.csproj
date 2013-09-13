@@ -643,6 +643,13 @@
     <Compile Include="Sales\Confirmation\ReportDirectSalesInovice.aspx.designer.cs">
       <DependentUpon>ReportDirectSalesInovice.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Sales\Confirmation\ReportSalesQuotation.aspx.cs">
+      <DependentUpon>ReportSalesQuotation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sales\Confirmation\ReportSalesQuotation.aspx.designer.cs">
+      <DependentUpon>ReportSalesQuotation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Sales\DeliveryForOrder.aspx.cs">
       <DependentUpon>DeliveryForOrder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1097,6 +1104,9 @@
     <Content Include="Reports\Assets\Header.html" />
     <Content Include="Reports\ReportMaster.aspx" />
     <Content Include="Reports\ReportViewer.aspx" />
+    <Content Include="Reports\Sources\en-US\Sales.View.Sales.Quotation.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Reports\Sources\en-US\Sales.View.Sales.CustomerDeliveryNote.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -1140,6 +1150,7 @@
     <Content Include="Sales\Confirmation\DirectSales.aspx" />
     <Content Include="Sales\Confirmation\ReportDeliveryNote.aspx" />
     <Content Include="Sales\Confirmation\ReportDirectSalesInovice.aspx" />
+    <Content Include="Sales\Confirmation\ReportSalesQuotation.aspx" />
     <Content Include="Sales\DeliveryForOrder.aspx" />
     <Content Include="Sales\DeliveryWithoutOrder.aspx" />
     <Content Include="Sales\DirectSales.aspx" />
@@ -1470,6 +1481,9 @@
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jqueryNumber\jquery.number.min.js" />
     <Content Include="Scripts\mixerp.js" />
+    <Content Include="Scripts\raphaeljs\analytics.js" />
+    <Content Include="Scripts\raphaeljs\popup.js" />
+    <Content Include="Scripts\raphaeljs\raphael-min.js" />
     <Content Include="Scripts\shortcut.js" />
     <Content Include="Services\AccountData.asmx" />
     <Content Include="Services\ItemData.asmx" />
@@ -1512,9 +1526,6 @@
     <Content Include="MenuMaster.Master" />
     <Content Include="MixERPMaster.Master" />
     <Content Include="Scripts\CodeMirror\.travis.yml" />
-    <Content Include="Scripts\CodeMirror\bin\compress" />
-    <Content Include="Scripts\CodeMirror\bin\lint" />
-    <Content Include="Scripts\CodeMirror\bin\source-highlight" />
     <Content Include="Scripts\CodeMirror\bower.json" />
     <Content Include="Scripts\CodeMirror\CONTRIBUTING.md" />
     <Content Include="Scripts\CodeMirror\LICENSE" />
@@ -1564,6 +1575,7 @@
     <Folder Include="Resource\DatabaseBackups\" />
     <Folder Include="Resource\Frameworks\" />
     <Folder Include="Resource\Logo\" />
+    <Folder Include="Scripts\CodeMirror\bin\" />
     <Folder Include="Setup\General\" />
   </ItemGroup>
   <ItemGroup>

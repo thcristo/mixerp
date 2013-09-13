@@ -7,7 +7,6 @@ http://mozilla.org/MPL/2.0/.
 --%>
 <%@ Control Language="C#" AutoEventWireup="True" CodeBehind="ProductViewControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductViewControl" %>
 <AjaxCTK:ToolkitScriptManager ID="ScriptManager1" runat="server" />
-
 <div id="filter" class="vpad8">
     <table class="form">
         <tr>
@@ -36,7 +35,6 @@ http://mozilla.org/MPL/2.0/.
                 Statement Reference
             </td>
             <td>
-
             </td>
         </tr>
         <tr>
@@ -79,17 +77,16 @@ http://mozilla.org/MPL/2.0/.
         AutoGenerateColumns="false"
         OnRowDataBound="SalesQuotationGridView_RowDataBound">
         <Columns>
-            <asp:TemplateField>
+            <asp:TemplateField HeaderStyle-Width="56px" HeaderText="actions">
                 <ItemTemplate>
-                    <a href="#" title="Preview">
-                        <img src="../Resource/Icons/search-16.png" />
+                    <a href="#" id="PreviewAnchor" runat="server" title="Quick Preview" class="preview">
+                        <img src="/Resource/Icons/search-16.png" />
                     </a>
-                    <a href="#" title="Go To Top">
-                        <img src="../Resource/Icons/top-16.png" />
+                    <a href="#" id="PrintAnchor" runat="server" title="Print">
+                        <img src="/Resource/Icons/print-16.png" />
                     </a>
-                    <a href="#">
-                    </a>
-                    <a href="#">
+                    <a href="#" title="Go To Top" onclick="window.scroll(0);">
+                        <img src="/Resource/Icons/top-16.png" />
                     </a>
                 </ItemTemplate>
             </asp:TemplateField>
@@ -107,15 +104,17 @@ http://mozilla.org/MPL/2.0/.
             <asp:BoundField DataField="transaction_ts" HeaderText="transaction_ts" DataFormatString="{0:D}" />
             <asp:BoundField DataField="user" HeaderText="user" />
             <asp:BoundField DataField="statement_reference" HeaderText="statement_reference" />
+            <asp:BoundField DataField="flag_color" HeaderText="flag_color" />
         </Columns>
     </asp:GridView>
 </asp:Panel>
+
 
 <script runat="server">
     protected void Page_Init(object sender, EventArgs e)
     {
     }
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
         this.LoadGridView();
@@ -141,7 +140,7 @@ http://mozilla.org/MPL/2.0/.
         {
             SalesQuotationGridView.DataSource = table;
             SalesQuotationGridView.DataBind();
-        }    
+        }
     }
 
     protected void SalesQuotationGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -163,6 +162,24 @@ http://mozilla.org/MPL/2.0/.
         if(e.Row.RowType == DataControlRowType.DataRow)
         {
             //e.Row.Cells[2].Text = string.Format(e.Row.Cells[2].Text, "{0:dd/MM/yyyy}");
+            string id = e.Row.Cells[2].Text;
+
+            if(!string.IsNullOrWhiteSpace(id))
+            {
+                string popUpQuotationPreviewUrl = "/Sales/Confirmation/ReportSalesQuotation.aspx?TranId=" + id;
+
+                HtmlAnchor previewAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PreviewAnchor");
+                if(previewAnchor != null)
+                {
+                    previewAnchor.HRef = popUpQuotationPreviewUrl;
+                }
+
+                HtmlAnchor printAnchor = (HtmlAnchor)e.Row.Cells[0].FindControl("PrintAnchor");
+                if(printAnchor != null)
+                {
+                    printAnchor.Attributes.Add("onclick", "showWindow('" + popUpQuotationPreviewUrl + "');return false;");
+                }
+            }
         }
     }    
 </script>
@@ -199,4 +216,50 @@ http://mozilla.org/MPL/2.0/.
         });
     });
 
+
+
+    function DropDown(el) {
+        this.dd = el;
+        this.placeholder = this.dd.children('span');
+        this.opts = this.dd.find('ul.dropdown > li');
+        this.val = '';
+        this.index = -1;
+        this.initEvents();
+    }
+
+    DropDown.prototype = {
+        initEvents: function () {
+            var obj = this;
+
+            obj.dd.on('click', function (event) {
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            });
+
+            obj.opts.on('click', function (e) {
+                var opt = $(this);
+                obj.val = opt.text();
+                obj.index = opt.index();
+                obj.placeholder.text(obj.val);
+            });
+        },
+
+        getValue: function () {
+            return this.val;
+        },
+        getIndex: function () {
+            return this.index;
+        }
+    }
+
+    $(function () {
+
+        var dd = new DropDown($('#dd'));
+
+        $(document).click(function () {
+            // all dropdowns
+            $('.wrapper-dropdown-5').removeClass('active');
+        });
+
+    });
 </script>

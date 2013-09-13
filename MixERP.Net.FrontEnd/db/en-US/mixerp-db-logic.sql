@@ -652,6 +652,7 @@ DROP FUNCTION IF EXISTS transactions.get_product_view
 
 DROP FUNCTION IF EXISTS transactions.get_product_view
 (	
+	user_id_				integer,
 	book_					text,
 	office_id_				integer,
 	date_from_				date, 
@@ -665,7 +666,8 @@ DROP FUNCTION IF EXISTS transactions.get_product_view
  );
 
 CREATE FUNCTION transactions.get_product_view
-(	
+(
+	user_id_				integer,
 	book_					text,
 	office_id_				integer,
 	date_from_				date, 
@@ -687,7 +689,8 @@ RETURNS TABLE
 	transaction_ts				TIMESTAMP WITH TIME ZONE,
 	"user"					national character varying(50),
 	reference_number			national character varying(24),
-	statement_reference			text
+	statement_reference			text,
+	flag_color				text
 )
 AS
 $$
@@ -715,7 +718,8 @@ BEGIN
 		transactions.non_gl_stock_master.transaction_ts,
 		office.users.user_name AS user,
 		transactions.non_gl_stock_master.reference_number,
-		transactions.non_gl_stock_master.statement_reference
+		transactions.non_gl_stock_master.statement_reference,
+		core.get_flag_color(core.get_flag_type_id(user_id_, book_, transactions.non_gl_stock_master.non_gl_stock_master_id)) AS flag
 	FROM transactions.non_gl_stock_master
 	INNER JOIN core.parties
 	ON transactions.non_gl_stock_master.party_id = core.parties.party_id

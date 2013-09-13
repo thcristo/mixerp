@@ -163,6 +163,99 @@ CREATE TABLE office.users
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
+CREATE TABLE core.flag_types
+(
+	flag_type_id				SERIAL NOT NULL PRIMARY KEY,
+	flag_type_name				national character varying(24) NOT NULL,
+	flag_color				text,
+	audit_user_id				integer NULL REFERENCES office.users(user_id),
+	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+INSERT INTO core.flag_types(flag_type_name, flag_color)
+SELECT 'Important',		'#D61D04' UNION ALL
+SELECT 'Critical', 		'#EB0CDC' UNION ALL
+SELECT 'Review', 		'#A11CD6' UNION ALL
+SELECT 'Todo', 			'#B4BA07' UNION ALL
+SELECT 'Ok', 			'#8DC41D';
+
+CREATE TABLE core.flags
+(
+	flag_id					BIGSERIAL NOT NULL PRIMARY KEY,
+	user_id					integer NOT NULL REFERENCES office.users(user_id),
+	flag_type_id				integer NOT NULL REFERENCES core.flag_types(flag_type_id),
+	resource				text,
+	resource_id				text	
+);
+
+
+CREATE FUNCTION core.get_flag_type_id
+(
+	user_id_ integer,
+	resource_ text,
+	resource_id_ text
+)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN 
+	(
+		SELECT flag_type_id
+		FROM core.flags
+		WHERE user_id=$1
+		AND resource=$2
+		AND resource_id=$3
+	);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_type_id
+(
+	user_id_ integer,
+	resource_ text,
+	resource_id_ bigint
+)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN core.get_flag_type_id($1, $2, $3::text);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_type_id
+(
+	user_id_ integer,
+	resource_ text,
+	resource_id_ integer
+)
+RETURNS integer
+AS
+$$
+BEGIN
+	RETURN core.get_flag_type_id($1, $2, $3::text);
+END
+$$
+LANGUAGE plpgsql;
+
+CREATE FUNCTION core.get_flag_color(flag_type_id_ integer)
+RETURNS text
+AS
+$$
+BEGIN
+	RETURN
+	(
+		SELECT flag_color
+		FROM core.flag_types
+		WHERE core.flag_types.flag_type_id=$1
+	);
+END
+$$
+LANGUAGE plpgsql;
+
 CREATE TABLE core.currencies
 (
 	currency_code				national character varying(12) NOT NULL PRIMARY KEY,
@@ -3254,7 +3347,7 @@ CREATE TABLE transactions.non_gl_stock_master
 
 CREATE TABLE transactions.non_gl_stock_details
 (
-	non_gl_stock_details_id 		BIGSERIAL NOT NULL PRIMARY KEY,
+	non_gl_stock_detail_id 			BIGSERIAL NOT NULL PRIMARY KEY,
 	non_gl_stock_master_id 			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
 	item_id 				integer NOT NULL REFERENCES core.items(item_id),
 	quantity 				integer NOT NULL,
@@ -3267,6 +3360,25 @@ CREATE TABLE transactions.non_gl_stock_details
 	tax 					money NOT NULL CONSTRAINT non_gl_stock_details_tax_df DEFAULT(0),
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
+);
+
+--This table stores information of quotations
+--which were upgraded to order(s).
+CREATE TABLE transactions.non_gl_stock_master_relations
+(
+	stock_master_non_gl_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
+	order_non_gl_stock_master_id		bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id),
+	quotation_non_gl_stock_master_id	bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id)
+);
+
+
+--This table stores information of Non GL Stock Transactions such as orders and quotations
+--which were upgraded to deliveries or invoices.
+CREATE TABLE transactions.stock_master_non_gl_relations
+(
+	stock_master_non_gl_relation_id		BIGSERIAL NOT NULL PRIMARY KEY,	
+	stock_master_id				bigint NOT NULL REFERENCES transactions.stock_master(stock_master_id),
+	non_gl_stock_master_id			bigint NOT NULL REFERENCES transactions.non_gl_stock_master(non_gl_stock_master_id)
 );
 
 

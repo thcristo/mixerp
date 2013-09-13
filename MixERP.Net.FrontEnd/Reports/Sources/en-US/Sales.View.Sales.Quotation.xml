@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+Copyright (C) Binod Nepal, Mix Open Foundation (http://mixof.org).
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+If a copy of the MPL was not distributed  with this file, You can obtain one at 
+http://mozilla.org/MPL/2.0/.
+-->
+
+<PesReport>
+    <Title>{Resources.Titles.SalesQuotation}</Title>
+    <TopSection>
+        <table class="table horizontal">
+            <tr>
+                <td>{Resources.Titles.TransactionDate}</td>
+                <td>{DataSource[0].transaction_ts}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.ValueDate}</td>
+                <td>{DataSource[0].value_date}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.EnteredBy}</td>
+                <td> {DataSource[0].entered_by}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.Office}</td>
+                <td>{DataSource[0].office_name}</td>
+            </tr>
+            <tr>
+                <td>{Resources.Titles.CustomerName}</td>
+                <td>{DataSource[0].party_name}</td>
+            </tr>
+        </table>
+        <br />
+    </TopSection>
+    <Body>
+        <Content>
+            <h2>{Resources.Titles.InvoiceDetails}</h2>
+        </Content>
+        <GridViews>
+            <GridView>
+                <GridViewDataSource Index="1">
+                </GridViewDataSource>
+            </GridView>
+        </GridViews>
+    </Body>
+    <BottomSection>
+        <h3>{Resources.Titles.OtherDetails}</h3>
+        <p>
+            <table class="table horizontal">
+                <tr>
+                    <td>{Resources.Titles.PriceType}</td>
+                    <td>{DataSource[0].price_type_name}</td>
+                </tr>
+                <tr>
+                    <td>{Resources.Titles.StatementReference}</td>
+                    <td>{DataSource[0].statement_reference}</td>
+                </tr>
+            </table>
+        </p>
+    </BottomSection>
+    <DataSources>
+        <DataSource>
+            <Query>
+                SELECT
+                transactions.non_gl_stock_master.transaction_ts,
+                transactions.non_gl_stock_master.value_date,
+                office.users.user_name AS entered_by,
+                office.offices.office_name,
+                transactions.non_gl_stock_master.statement_reference,
+                core.parties.party_name,
+                core.price_types.price_type_name
+                FROM transactions.non_gl_stock_master
+                INNER JOIN office.offices
+                ON transactions.non_gl_stock_master.office_id = office.offices.office_id
+                INNER JOIN office.users
+                ON transactions.non_gl_stock_master.user_id = office.users.user_id
+                INNER JOIN core.parties
+                ON transactions.non_gl_stock_master.party_id = core.parties.party_id
+                INNER JOIN core.price_types
+                ON transactions.non_gl_stock_master.price_type_id = core.price_types.price_type_id
+                WHERE transactions.non_gl_stock_master.non_gl_stock_master_id=@non_gl_stock_master_id;
+
+            </Query>
+            <Parameters>
+                <Parameter Name="@non_gl_stock_master_id" Type="Number" />
+            </Parameters>
+        </DataSource>
+        <DataSource>
+            <Query>
+                SELECT
+                core.items.item_code,
+                core.items.item_name,
+                transactions.non_gl_stock_details.quantity,
+                core.units.unit_name,
+                transactions.non_gl_stock_details.price,
+                transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity AS amount,
+                transactions.non_gl_stock_details.discount,
+                (transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity) - transactions.non_gl_stock_details.discount AS sub_total,
+                transactions.non_gl_stock_details.tax,
+                (transactions.non_gl_stock_details.price * transactions.non_gl_stock_details.quantity) - transactions.non_gl_stock_details.discount + transactions.non_gl_stock_details.tax AS total
+                FROM
+                transactions.non_gl_stock_details
+                INNER JOIN
+                core.items
+                ON transactions.non_gl_stock_details.item_id = core.items.item_id
+                INNER JOIN
+                core.units
+                ON transactions.non_gl_stock_details.unit_id = core.units.unit_id
+                WHERE
+                transactions.non_gl_stock_details.non_gl_stock_master_id =
+                (
+                select transactions.non_gl_stock_master.non_gl_stock_master_id
+                FROM transactions.non_gl_stock_master
+                WHERE transactions.non_gl_stock_master.non_gl_stock_master_id=@non_gl_stock_master_id
+                )
+                ORDER BY transactions.non_gl_stock_details.non_gl_stock_detail_id;
+            </Query>
+            <Parameters>
+                <Parameter Name="@non_gl_stock_master_id" Type="Number" />
+            </Parameters>
+            <RunningTotalTextColumnIndex>3</RunningTotalTextColumnIndex>
+            <RunningTotalFieldIndices>5,6,7,8,9</RunningTotalFieldIndices>
+        </DataSource>
+    </DataSources>
+    <Install>
+        <Query>
+            DO
+            $$
+            BEGIN
+            IF NOT EXISTS(SELECT * FROM core.menus WHERE menu_code='SAR-SVSI') THEN
+            INSERT INTO core.menus(menu_text, url, menu_code, level, parent_menu_id)
+            SELECT 'View Sales Inovice', '/Reports/Sales.View.Sales.Invoice.xml', 'SAR-SVSI', 2, core.get_menu_id('SAR');
+            END IF;
+            END
+            $$
+            LANGUAGE plpgsql;
+        </Query>
+    </Install>
+</PesReport>

@@ -1077,4 +1077,16 @@
   <data name="audit_user_id" xml:space="preserve">
     <value>Audit User Id</value>
   </data>
+  <data name="actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="non_gl_stock_master_id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="resource" xml:space="preserve">
+    <value>Resource</value>
+  </data>
+  <data name="flag_color" xml:space="preserve">
+    <value>Flag Color</value>
+  </data>
 </root>

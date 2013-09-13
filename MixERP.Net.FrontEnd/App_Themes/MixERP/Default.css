@@ -114,62 +114,66 @@ a
 
 
 
-                body
-    {
-        font-size: 11px!important;
-    }
+body
+{
+    font-size: 11px!important;
+}
 
-    hr
+hr
+{
+    border: 1px solid gray;
+    border-top: 0px;
+}
+
+table.report tr th, table.report tr td
+{
+    padding: 4px;
+}
+
+
+.table
+{
+    border-collapse: collapse;
+    border: 1px solid gray;
+    min-width: 400px;
+}
+
+    .table td
     {
         border: 1px solid gray;
-        border-top: 0px;
+        padding: 4px!important;
     }
 
-    table.report tr th, table.report tr td
+table.horizontal > tbody > tr > td:first-child
+{
+    width: 180px;
+    font-weight: bold;
+}
+
+
+.report-command
+{
+    border: 1px solid #EDCAF7;
+    position: absolute;
+    padding: 4px 12px 4px 12px;
+    top: 20px;
+    right: 20px;
+    background-color: #F8EBFC;
+}
+
+    .report-command:hover
     {
-        padding: 4px;
+        background-color: #F2DAFA;
     }
 
-
-    .table
+@media print
+{
+    .hide
     {
-        border-collapse: collapse;
-        border: 1px solid gray;
-        min-width: 400px;
+        display: none;
     }
-
-        .table td
-        {
-            border: 1px solid gray;
-            padding: 4px!important;
-        }
-
-    table.horizontal > tbody > tr > td:first-child
-    {
-        width: 180px;
-        font-weight: bold;
-    }
+}
 
 
-    .report-command
-    {
-        border: 1px solid #EDCAF7;
-        position: absolute;
-        padding: 4px 12px 4px 12px;
-        top: 20px;
-        right: 20px;
-        background-color: #F8EBFC;
-    }
 
-        .report-command:hover
-        {
-            background-color: #F2DAFA;
-        }
 
-    @media print
-    {
-        .hide
-        {
-            display: none;
-        }
-    }

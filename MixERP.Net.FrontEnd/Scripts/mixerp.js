@@ -174,6 +174,7 @@ function dateAdd(dt, expression, number) {
 
     return ret.toString(shortDateFormat);
 }
+
 /******************************************************************************************************
 DATE EXPRESSION END
 ******************************************************************************************************/
@@ -198,3 +199,30 @@ var setNumberFormat = function () {
     $('input.number').number(true, decimalPlaces, decimalSeparator, thousandSeparator);
 }
 
+/******************************************************************************************************
+ tableToJson FROM http://johndyer.name/html-table-to-json/ START
+******************************************************************************************************/
+
+function tableToJson(table) {
+    var data = []; // first row needs to be headers 
+    var headers = [];
+    for (var i = 0; i < table.rows[0].cells.length; i++) {
+        headers[i] = table.rows[0].cells[i].innerHTML.replace(/ /gi, '');
+    }
+    // go through cells 
+    for (var i = 1; i < table.rows.length; i++) {
+        var tableRow = table.rows[i];
+        var rowData = {};
+
+        for (var j = 0; j < tableRow.cells.length; j++) {
+            rowData[headers[j]] = tableRow.cells[j].innerHTML;
+        }
+
+        data.push(rowData);
+    }
+    return data;
+}
+
+/******************************************************************************************************
+ tableToJson END
+******************************************************************************************************/

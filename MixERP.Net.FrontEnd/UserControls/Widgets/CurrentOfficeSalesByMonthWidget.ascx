@@ -11,6 +11,7 @@ http://mozilla.org/MPL/2.0/.
         Sales By Month (In Thousands) (Todo: Admin Only)
     </div>
     <div class="panel-content">
+
         <asp:Chart runat="server" ID="ctl01" Height="212px" Width="442px">
             <Series>
                 <asp:Series Name="PES-NY-BK (Brooklyn Branch)" ChartType="FastLine" BorderWidth="5" Color="GreenYellow">
@@ -41,3 +42,7 @@ http://mozilla.org/MPL/2.0/.
         </asp:Chart>
     </div>
 </div>
+
+<script type="text/javascript">
+
+</script>

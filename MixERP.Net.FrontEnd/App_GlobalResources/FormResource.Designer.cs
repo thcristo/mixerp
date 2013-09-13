@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        internal static string actions {
+            get {
+                return ResourceManager.GetString("actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Activity Id.
         /// </summary>
         internal static string activity_id {
@@ -1132,6 +1141,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flag Color.
+        /// </summary>
+        internal static string flag_color {
+            get {
+                return ResourceManager.GetString("flag_color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frequency Code.
         /// </summary>
         internal static string frequency_code {
@@ -1699,6 +1717,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Id.
+        /// </summary>
+        internal static string non_gl_stock_master_id {
+            get {
+                return ResourceManager.GetString("non_gl_stock_master_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Numeric Precision.
         /// </summary>
         internal static string numeric_precision {
@@ -2226,6 +2253,15 @@ namespace Resources {
         internal static string repository {
             get {
                 return ResourceManager.GetString("repository", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource.
+        /// </summary>
+        internal static string resource {
+            get {
+                return ResourceManager.GetString("resource", resourceCulture);
             }
         }
         

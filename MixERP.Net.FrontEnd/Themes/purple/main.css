@@ -146,10 +146,10 @@ input, select
 
     #menu a.icon
     {
-        padding:16px 4px 7px 7px;
-        width:24px;
-        height:24px;
-        margin:0px;
+        padding: 16px 4px 7px 7px;
+        width: 24px;
+        height: 24px;
+        margin: 0px;
     }
 
 .error
@@ -586,10 +586,10 @@ a.sub-menu-anchor, a.sub-menu-anchor:visited
     vertical-align: middle!important;
 }
 
-    .form-table
-    {
-        empty-cells:hide;
-    }
+.form-table
+{
+    empty-cells: hide;
+}
 
 .grid2
 {
@@ -945,21 +945,20 @@ input.date
 
 .ajax__calendar
 {
-
 }
 
 .ajax__calendar_container
 {
-
 }
+
 .ajax__calendar_other div
 {
-    color:#E0D7F4!important;
+    color: #E0D7F4!important;
 }
 
 .ajax__calendar_day
 {
-    text-align:center!important;
+    text-align: center!important;
 }
 
 .ajax__calendar br
@@ -968,22 +967,97 @@ input.date
 
 .ajax__calendar td
 {
-    vertical-align:middle!important;
+    vertical-align: middle!important;
 }
 
 .ajax__calendar_month, .ajax__calendar_year
 {
-    height:36px!important;
-    width:36px!important;
-    text-align:center!important;
-    vertical-align:middle!important;
+    height: 36px!important;
+    width: 36px!important;
+    text-align: center!important;
+    vertical-align: middle!important;
 }
 
 .ajax__calendar_active div, .ajax__calendar_hover div
 {
-    border-color:#9900CC!important;
+    border-color: #9900CC!important;
     background-color: #9900CC!important;
     color: #FFFFFF!important;
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ul
+{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    #menu2 ul li
+    {
+        display: block;
+        position: relative;
+        float: left;
+        width: 112px;
+    }
+
+li ul
+{
+    display: none;
+}
+
+#menu2 ul li a
+{
+    display: block;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    padding: 4px 8px 4px 8px;
+    border: 0px solid #8A67C5;
+    margin-right: 4px;
+    background-color: #CC0099!important;
+}
+
+ul li ul li a
+{
+    border: none!important;
+}
+
+ul li ul li a:hover
+    {
+        color: black;
+        opacity:0.8;
+    }
+
+li:hover ul
+{
+    display: block;
+    position: absolute;
+}
+
+#menu2 li:hover li
+{
+    float: none;
+}

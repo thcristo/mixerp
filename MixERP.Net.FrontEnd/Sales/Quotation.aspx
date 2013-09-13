@@ -19,12 +19,45 @@ http://mozilla.org/MPL/2.0/.
     <hr class="hr" />
 
     <div class="vpad12">
-        <asp:LinkButton ID="AddNewLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, AddNew %>"
-            OnClientClick="window.location='/Sales/Entry/Quotation.aspx';return false;" />
-        <asp:LinkButton ID="FlagLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, FlagSelection %>" />
-        <asp:LinkButton ID="MergeToSalesOrderLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesOrder %>" />
-        <asp:LinkButton ID="MergeToSalesDeliveryLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>" />
+        <table class="valignmiddle" style="border-collapse:collapse;">
+            <tr>
+                <td>
+                    <asp:LinkButton ID="AddNewLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, AddNew %>"
+                        OnClientClick="window.location='/Sales/Entry/Quotation.aspx';return false;" />
+
+                    <asp:LinkButton ID="MergeToSalesOrderLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesOrder %>" />
+                    <asp:LinkButton ID="MergeToSalesDeliveryLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>" />
+                </td>
+                <td>
+                    <ul id="menu2">
+                        <li>
+                            <a href="" class="menu">Select a Flag</a>
+                            <ul>
+                                <li>
+                                    <a style="background-color:#D61D04!important;" class="dropdown" href="#">Important</a></li>
+                                <li>
+                                    <a style="background-color:#EB0CDC!important;" class="dropdown" href="#">Critical</a></li>
+                                <li>
+                                    <a style="background-color:#A11CD6!important;" class="dropdown" href="#">Review</a>
+                                </li>
+                                <li>
+                                    <a style="background-color:#B4BA07!important;"  class="dropdown" href="#">Todo</a>
+                                </li>
+                                <li>
+                                    <a style="background-color:#8DC41D!important;" class="dropdown" href="#">OK</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown" href="#">Select a Flag</a></li>
+                                <li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
     </div>
+    <asp:Label ID="ErrorLabel" runat="server" CssClass="error" Text="Cannot merge quotations of multiple parties into a batch. Please try again." />
 
     <mixerp:ProductView runat="server" />
 

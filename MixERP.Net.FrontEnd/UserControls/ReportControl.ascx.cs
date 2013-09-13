@@ -249,17 +249,17 @@ namespace MixERP.Net.FrontEnd.UserControls
         private void SetGridViews()
         {
             XmlNodeList gridViewDataSource = XmlHelper.GetNodes(reportPath, "//GridViewDataSource");
-            string gridSection = string.Empty;
+            string indices = string.Empty;
 
             foreach(XmlNode node in gridViewDataSource)
             {
-                if(!string.IsNullOrWhiteSpace(node.InnerText))
+                if(node.Attributes["Index"] != null)
                 {
-                    gridSection += node.InnerText.Trim() + ",";
+                    indices += node.Attributes["Index"].Value + ",";
                 }
             }
 
-            this.LoadGrid(string.Concat(gridSection));
+            this.LoadGrid(string.Concat(indices));
         }
         private void LoadGrid(string indices)
         {

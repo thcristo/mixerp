@@ -24,7 +24,7 @@ namespace MixERP.Net.DatabaseLayer.Helpers
 
             using(NpgsqlCommand command = new NpgsqlCommand())
             {
-                //We are 100% sure that the following paramters do not come from user input.
+                //We are 100% sure that the following parameters do not come from user input.
                 //Having said that, it is nice to sanitize the objects before sending it to the database server.
                 sql = sql.Replace("@TableSchema", DBFactory.Sanitizer.SanitizeIdentifierName(tableSchema));
                 sql = sql.Replace("@TableName", DBFactory.Sanitizer.SanitizeIdentifierName(tableName));

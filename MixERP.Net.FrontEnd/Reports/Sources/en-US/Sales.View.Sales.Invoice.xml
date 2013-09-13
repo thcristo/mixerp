@@ -60,8 +60,7 @@ http://mozilla.org/MPL/2.0/.
         </Content>
         <GridViews>
             <GridView>
-                <GridViewDataSource>
-                    1
+                <GridViewDataSource Index="1">
                 </GridViewDataSource>
             </GridView>
         </GridViews>

@@ -21,16 +21,19 @@ namespace MixERP.Net.Common
             {
                 return;
             }
-            
+
             var exception = ex;
 
             if(ex.GetBaseException() != null)
             {
                 exception = ex.GetBaseException();
             }
-            
-            System.Web.HttpContext.Current.Session["ex"] = exception;
-            System.Web.HttpContext.Current.Response.Redirect("~/RuntimeError.aspx", true);
+
+            if(System.Web.HttpContext.Current.Session != null)
+            {
+                System.Web.HttpContext.Current.Session["ex"] = exception;
+                System.Web.HttpContext.Current.Response.Redirect("~/RuntimeError.aspx", true);
+            }
         }
     }
 }

@@ -29,8 +29,8 @@ CREATE FUNCTION office.sign_in(office_id integer_strict, user_name text, passwor
 RETURNS integer
 AS
 $$
-DECLARE _user_id integer;
-DECLARE _lock_out_till TIMESTAMP;
+	DECLARE _user_id integer;
+	DECLARE _lock_out_till TIMESTAMP;
 BEGIN
 	_user_id:=office.get_user_id_by_user_name($2);
 

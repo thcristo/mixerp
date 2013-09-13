@@ -16,7 +16,7 @@ http://mozilla.org/MPL/2.0/.
 <body>
     <form id="form1" runat="server">
     <mixerp:Report ID="DirectPurchaseInvoiceReport" runat="server" 
-        ReportPath="~/Reports/Sources/en-US/Purchase.View.Purchase.Invoice.xml" AutoInitialize="true" />
+        Path="~/Reports/Sources/en-US/Purchase.View.Purchase.Invoice.xml" AutoInitialize="true" />
     </form>
 </body>
 </html>

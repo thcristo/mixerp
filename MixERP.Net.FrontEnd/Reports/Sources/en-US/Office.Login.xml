@@ -17,8 +17,7 @@ http://mozilla.org/MPL/2.0/.
         </Content>
         <GridViews>
             <GridView>
-                <GridViewDataSource>
-                    0
+                <GridViewDataSource Index="0">
                 </GridViewDataSource>
             </GridView>
         </GridViews>

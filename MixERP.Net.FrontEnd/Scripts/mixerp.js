@@ -199,30 +199,115 @@ var setNumberFormat = function () {
     $('input.number').number(true, decimalPlaces, decimalSeparator, thousandSeparator);
 }
 
+
+
+
 /******************************************************************************************************
- tableToJson FROM http://johndyer.name/html-table-to-json/ START
+Chart BEGIN
 ******************************************************************************************************/
+var chartColors = ["#B54BDB", "#272EE8", "#67A12D", "#CCD439", "#51B0A6", "#D49B39", "#48BD59", "#48BD9A", "#488CBD", "#48B7BD", "#E82727", "#E84898", "#E848E3", "#B07951", "#99CC33", "#E6892C", "#97BBCD"];
 
-function tableToJson(table) {
-    var data = []; // first row needs to be headers 
-    var headers = [];
-    for (var i = 0; i < table.rows[0].cells.length; i++) {
-        headers[i] = table.rows[0].cells[i].innerHTML.replace(/ /gi, '');
-    }
-    // go through cells 
-    for (var i = 1; i < table.rows.length; i++) {
-        var tableRow = table.rows[i];
-        var rowData = {};
+function getFillColor(index) {
+    var color = hexToRgb(chartColors[index]);
+    var opacity = 0.5;
+    return "rgba(" + color.r + "," + color.g + "," + color.b + "," + opacity + ")";
+}
 
-        for (var j = 0; j < tableRow.cells.length; j++) {
-            rowData[headers[j]] = tableRow.cells[j].innerHTML;
+function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function prepareChart(datasourceId, canvasId, legendId, type) {
+    var table = $("#" + datasourceId);
+    var labels = [];
+    var data = [];
+    var datasets = [];
+    var title;
+    var index = 0;
+
+    //Loop through the table header for labels.
+    table.find("thead th").each(function () {
+
+        //Ignore the first column of the header
+        if (index > 0) {
+            //Create labels from header row columns.
+            labels.push($(this).html());
         }
 
-        data.push(rowData);
+        index++;
+    });
+
+    //Reset the counter.
+    index = 0;
+
+    //Loop through each row of the table body.
+    table.find("tbody tr").each(function () {
+
+        //Get an instance of the current row
+        var row = $(this);
+
+        //The first column of each row is the legend.
+        title = row.find(">:first-child").html();
+
+        //Reset the data object's value from the previous iteration.
+        data = [];
+        //Loop through the row columns.
+        row.find("td").each(function () {
+            //Get data from this row.
+            data.push($(this).html());
+        });
+
+        //Create a new dataset representing this row.
+        var dataset =
+            {
+                fillColor: getFillColor(index),
+                strokeColor: chartColors[index],
+                pointColor: chartColors[index],
+                data: data,
+                title: title
+            };
+
+        //Add the dataset object to the array object.
+        datasets.push(dataset);
+
+        index++;
+    });
+
+
+    var data = {
+        labels: labels,
+        datasets: datasets
     }
-    return data;
+
+    var ctx = document.getElementById(canvasId).getContext("2d");
+
+    switch (type) {
+        case "line":
+            new Chart(ctx).Line(data);
+            break;
+        case "radar":
+            new Chart(ctx).Radar(data);
+            break;
+        default:
+            new Chart(ctx).Bar(data);
+            break;
+    }
+
+    legend(document.getElementById(legendId), data);
+    table.hide();
 }
 
 /******************************************************************************************************
- tableToJson END
+Chart END
 ******************************************************************************************************/

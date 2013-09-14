@@ -14,13 +14,13 @@ http://mozilla.org/MPL/2.0/.
 <head runat="server">
     <link href="~/themes/purple/main.css" rel="stylesheet" type="text/css" runat="server" />
 
-    <script src="/Scripts/raphaeljs/raphael-min.js"></script>
-
     <script src="/Scripts/jquery.min.js" type="text/javascript"></script>
     <script src="/Scripts/shortcut.js"></script>
     <script src="/Scripts/colorbox/jquery.colorbox-min.js"></script>
     <script src="/Scripts/jqueryNumber/jquery.number.min.js"></script>
     <script src="/Scripts/date.js"></script>
+    <script src="/Scripts/chartjs/Chart.min.js"></script>
+    <script src="/Scripts/chartjs/legend.js"></script>
 
     <link href="/Scripts/colorbox/colorbox.css" rel="stylesheet" />
 

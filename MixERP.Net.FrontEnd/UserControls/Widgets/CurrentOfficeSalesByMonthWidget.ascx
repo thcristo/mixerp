@@ -12,37 +12,64 @@ http://mozilla.org/MPL/2.0/.
     </div>
     <div class="panel-content">
 
-        <asp:Chart runat="server" ID="ctl01" Height="212px" Width="442px">
-            <Series>
-                <asp:Series Name="PES-NY-BK (Brooklyn Branch)" ChartType="FastLine" BorderWidth="5" Color="GreenYellow">
-                    <Points>
-                        <asp:DataPoint AxisLabel="Jan" YValues="50" />
-                        <asp:DataPoint AxisLabel="Feb" YValues="30" />
-                        <asp:DataPoint AxisLabel="Mar" YValues="45" />
-                        <asp:DataPoint AxisLabel="Apr" YValues="35" />
-                        <asp:DataPoint AxisLabel="May" YValues="66" />
-                        <asp:DataPoint AxisLabel="Jun" YValues="70" />
-                        <asp:DataPoint AxisLabel="Jul" YValues="74" />
-                        <asp:DataPoint AxisLabel="Aug" YValues="45" />
-                        <asp:DataPoint AxisLabel="Sep" YValues="85" />
-                        <asp:DataPoint AxisLabel="Oct" YValues="90" />
-                        <asp:DataPoint AxisLabel="Nov" YValues="92" />
-                        <asp:DataPoint AxisLabel="Dec" YValues="95" />
-                    </Points>
-                </asp:Series>
-            </Series>
-            <Legends>
-                <asp:Legend Docking="Top" />
-            </Legends>
-            <ChartAreas>
-                <asp:ChartArea Name="ChartArea1" BorderColor="Green" BackColor="Green">
-                    <AxisX Interval="1" />
-                </asp:ChartArea>
-            </ChartAreas>
-        </asp:Chart>
+        <table id="datasource">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sep</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>PES-NY-MEM</th>
+                    <td>20</td>
+                    <td>10</td>
+                    <td>85</td>
+                    <td>55</td>
+                    <td>75</td>
+                    <td>50</td>
+                    <td>30</td>
+                    <td>80</td>
+                    <td>45</td>
+                    <td>80</td>
+                    <td>85</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <th>PES-NY-BK</th>
+                    <td>50</td>
+                    <td>30</td>
+                    <td>45</td>
+                    <td>35</td>
+                    <td>66</td>
+                    <td>70</td>
+                    <td>74</td>
+                    <td>45</td>
+                    <td>85</td>
+                    <td>90</td>
+                    <td>92</td>
+                    <td>95</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <canvas id="curr-office-sales-by-month-canvas" width="500px" height="180px"></canvas>
+        <div id="curr-office-sales-by-month-canvas-legend"></div>
+
     </div>
 </div>
 
 <script type="text/javascript">
-
+    prepareChart("datasource", "curr-office-sales-by-month-canvas", "curr-office-sales-by-month-canvas-legend", 'line');
 </script>

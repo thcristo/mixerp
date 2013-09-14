@@ -1165,6 +1165,8 @@
     <Content Include="Sales\Setup\AgentBonusSlabs.aspx" />
     <Content Include="Sales\Setup\Agents.aspx" />
     <Content Include="Sales\Setup\BonusSlabAssignment.aspx" />
+    <Content Include="Scripts\chartjs\Chart.min.js" />
+    <Content Include="Scripts\chartjs\legend.js" />
     <Content Include="Scripts\CodeMirror\.gitattributes" />
     <Content Include="Scripts\CodeMirror\.gitignore" />
     <Content Include="Scripts\CodeMirror\addon\comment\comment.js" />
@@ -1481,9 +1483,6 @@
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jqueryNumber\jquery.number.min.js" />
     <Content Include="Scripts\mixerp.js" />
-    <Content Include="Scripts\raphaeljs\analytics.js" />
-    <Content Include="Scripts\raphaeljs\popup.js" />
-    <Content Include="Scripts\raphaeljs\raphael-min.js" />
     <Content Include="Scripts\shortcut.js" />
     <Content Include="Services\AccountData.asmx" />
     <Content Include="Services\ItemData.asmx" />

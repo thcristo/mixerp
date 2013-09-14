@@ -2,7 +2,7 @@ function legend(parent, data) {
     parent.className = 'legend';
     var datas = data.hasOwnProperty('datasets') ? data.datasets : data;
 
-    datas.forEach(function(d) {
+    datas.forEach(function (d) {
         var title = document.createElement('span');
         title.className = 'legend-title';
         title.style.borderColor = d.hasOwnProperty('strokeColor') ? d.strokeColor : d.color;

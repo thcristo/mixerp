@@ -19,7 +19,7 @@ http://mozilla.org/MPL/2.0/.
     <hr class="hr" />
 
     <div class="vpad12">
-        <table class="valignmiddle" style="border-collapse:collapse;">
+        <table class="valignmiddle" style="border-collapse: collapse;">
             <tr>
                 <td>
                     <asp:LinkButton ID="AddNewLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, AddNew %>"
@@ -29,32 +29,30 @@ http://mozilla.org/MPL/2.0/.
                     <asp:LinkButton ID="MergeToSalesDeliveryLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>" />
                 </td>
                 <td>
-                    <ul id="menu2">
-                        <li>
-                            <a href="" class="menu">Select a Flag</a>
-                            <ul>
-                                <li>
-                                    <a style="background-color:#D61D04!important;" class="dropdown" href="#">Important</a></li>
-                                <li>
-                                    <a style="background-color:#EB0CDC!important;" class="dropdown" href="#">Critical</a></li>
-                                <li>
-                                    <a style="background-color:#A11CD6!important;" class="dropdown" href="#">Review</a>
-                                </li>
-                                <li>
-                                    <a style="background-color:#B4BA07!important;"  class="dropdown" href="#">Todo</a>
-                                </li>
-                                <li>
-                                    <a style="background-color:#8DC41D!important;" class="dropdown" href="#">OK</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown" href="#">Select a Flag</a></li>
-                                <li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <a href="#" class="menu" id="flagButton">Flag This Transaction</a></li>
                 </td>
             </tr>
         </table>
+        <div id="flag-popunder" style="position: absolute; width: 300px; display: none;" class="popunder">
+            <h3>Flag This Transaction</h3>
+            <hr class="hr" />
+
+            <div class="note">
+                You can mark this transaction with a flag, however you will not be able to see the flags created by other users.                
+            </div>
+            <br />
+            <p>Please select a flag</p>
+            <p>
+                <asp:DropDownList runat="server" Width="300px">
+                    <asp:ListItem Text="Important" Value="" />
+                </asp:DropDownList>
+            </p>
+            <p>
+                <asp:Button ID="UpdateButton" runat="server" Text="Udate" CssClass="menu" />
+                <a href="#" onclick="$('#flag-popunder').toggle(500);" class="menu">Close</a>
+            </p>
+        </div>
+
 
     </div>
     <asp:Label ID="ErrorLabel" runat="server" CssClass="error" Text="Cannot merge quotations of multiple parties into a batch. Please try again." />
@@ -63,4 +61,19 @@ http://mozilla.org/MPL/2.0/.
 
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="BottomScriptContentPlaceHolder" runat="server">
+    <script type="text/javascript">
+        var flagButton = $("#flagButton");
+
+        flagButton.click(function () {
+            var popunder = $("#flag-popunder");
+            var left = $(this).position().left;
+            var top = $(this).position().top;
+            var height = $(this).height();
+            var margin = 12;
+
+            popunder.css("left", left);
+            popunder.css("top", top + height + margin);
+            popunder.show(500);
+        });
+    </script>
 </asp:Content>

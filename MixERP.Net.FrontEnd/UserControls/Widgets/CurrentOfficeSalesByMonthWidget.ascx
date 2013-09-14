@@ -12,7 +12,7 @@ http://mozilla.org/MPL/2.0/.
     </div>
     <div class="panel-content">
 
-        <table id="datasource">
+        <table id="curr-office-sales-by-month-datasource">
             <thead>
                 <tr>
                     <th></th>
@@ -46,30 +46,15 @@ http://mozilla.org/MPL/2.0/.
                     <td>85</td>
                     <td>100</td>
                 </tr>
-                <tr>
-                    <th>PES-NY-BK</th>
-                    <td>50</td>
-                    <td>30</td>
-                    <td>45</td>
-                    <td>35</td>
-                    <td>66</td>
-                    <td>70</td>
-                    <td>74</td>
-                    <td>45</td>
-                    <td>85</td>
-                    <td>90</td>
-                    <td>92</td>
-                    <td>95</td>
-                </tr>
             </tbody>
         </table>
 
         <canvas id="curr-office-sales-by-month-canvas" width="500px" height="180px"></canvas>
-        <div id="curr-office-sales-by-month-canvas-legend"></div>
+        <div id="curr-office-sales-by-month-legend"></div>
 
     </div>
 </div>
 
 <script type="text/javascript">
-    prepareChart("datasource", "curr-office-sales-by-month-canvas", "curr-office-sales-by-month-canvas-legend", 'line');
+    prepareChart("curr-office-sales-by-month-datasource", "curr-office-sales-by-month-canvas", "curr-office-sales-by-month-legend", 'line');
 </script>

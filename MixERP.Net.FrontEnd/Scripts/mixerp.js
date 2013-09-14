@@ -205,11 +205,11 @@ var setNumberFormat = function () {
 /******************************************************************************************************
 Chart BEGIN
 ******************************************************************************************************/
-var chartColors = ["#B54BDB", "#272EE8", "#67A12D", "#CCD439", "#51B0A6", "#D49B39", "#48BD59", "#48BD9A", "#488CBD", "#48B7BD", "#E82727", "#E84898", "#E848E3", "#B07951", "#99CC33", "#E6892C", "#97BBCD"];
+var chartColors = ["#272EE8", "#E82727", "#B54BDB", "#67A12D", "#CCD439", "#51B0A6", "#D49B39", "#48BD59", "#48BD9A", "#488CBD", "#48B7BD", "#E84898", "#E848E3", "#B07951", "#99CC33", "#E6892C", "#97BBCD"];
 
 function getFillColor(index) {
     var color = hexToRgb(chartColors[index]);
-    var opacity = 0.5;
+    var opacity = 0.8;
     return "rgba(" + color.r + "," + color.g + "," + color.b + "," + opacity + ")";
 }
 
@@ -301,6 +301,56 @@ function prepareChart(datasourceId, canvasId, legendId, type) {
             break;
         default:
             new Chart(ctx).Bar(data);
+            break;
+    }
+
+    legend(document.getElementById(legendId), data);
+    table.hide();
+}
+
+function preparePieChart(datasourceId, canvasId, legendId, type) {
+    var table = $("#" + datasourceId);
+    var value;
+    var data = [];
+
+    //Reset the counter.
+    index = 0;
+
+    //Loop through each row of the table body.
+    table.find("tbody tr").each(function () {
+
+        //Get an instance of the current row
+        var row = $(this);
+
+        //The first column of each row is the legend.
+        title = row.find(">:first-child").html();
+
+        //The first column of each row is the legend.
+        value = parseInt(row.find("td").html());
+
+
+        var dataset = {
+            value: value,
+            color: chartColors[index],
+            title: title
+        };
+
+        //Add the dataset object to the array object.
+        data.push(dataset);
+        index++;
+    });
+
+    var ctx = document.getElementById(canvasId).getContext("2d");
+
+    switch (type) {
+        case "doughnut":
+            new Chart(ctx).Doughnut(data);
+            break;
+        case "polar":
+            new Chart(ctx).PolarArea(data);
+            break;
+        default:
+            new Chart(ctx).Pie(data);
             break;
     }
 

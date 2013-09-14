@@ -985,79 +985,9 @@ input.date
     color: #FFFFFF!important;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-ul
+.popunder
 {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-    #menu2 ul li
-    {
-        display: block;
-        position: relative;
-        float: left;
-        width: 112px;
-    }
-
-li ul
-{
-    display: none;
-}
-
-#menu2 ul li a
-{
-    display: block;
-    cursor: pointer;
-    color: black;
-    text-decoration: none;
-    padding: 4px 8px 4px 8px;
-    border: 0px solid #8A67C5;
-    margin-right: 4px;
-    background-color: #CC0099!important;
-}
-
-ul li ul li a
-{
-    border: none!important;
-}
-
-ul li ul li a:hover
-    {
-        color: black;
-        opacity:0.8;
-    }
-
-li:hover ul
-{
-    display: block;
-    position: absolute;
-}
-
-#menu2 li:hover li
-{
-    float: none;
+    border: 1px solid #C19EFC;
+    padding: 12px;
+    background-color: #F8F2FF;
 }

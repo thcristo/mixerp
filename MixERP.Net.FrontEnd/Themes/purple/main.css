@@ -2,12 +2,12 @@
 {
     margin: 0px;
     padding: 0px;
-    font-family: 'Segoe UI', 'Tahoma', 'Arial';
+    font-family: 'Segoe UI', 'Tahoma', 'Arial', 'Open Sans', open-sans, 'Source Sans Pro', MyriadPro-Regular, 'Myriad Pro Regular', MyriadPro, 'Myriad Pro', 'Lucida Grande', 'Droid Sans', Ubuntu, sans-serif;
 }
 
 .menu-header, h1, h2, h3, h4, h5, .title, .menu-title
 {
-    font-family: 'Segoe UI Light'!important;
+    font-family: 'Segoe UI Light', Tahoma, Geneva, Arial, 'Open Sans', open-sans, 'DejaVu Sans', 'Liberation Sans', Freesans, 'DejaVu Sans', sans-serif!important;
 }
 
 html

@@ -33,6 +33,8 @@ http://mozilla.org/MPL/2.0/.
                 </td>
             </tr>
         </table>
+
+
         <div id="flag-popunder" style="position: absolute; width: 300px; display: none;" class="popunder">
             <h3>Flag This Transaction</h3>
             <hr class="hr" />
@@ -43,8 +45,7 @@ http://mozilla.org/MPL/2.0/.
             <br />
             <p>Please select a flag</p>
             <p>
-                <asp:DropDownList runat="server" Width="300px">
-                    <asp:ListItem Text="Important" Value="" />
+                <asp:DropDownList ID="FlagDropDownList" runat="server" Width="300px">
                 </asp:DropDownList>
             </p>
             <p>
@@ -77,3 +78,10 @@ http://mozilla.org/MPL/2.0/.
         });
     </script>
 </asp:Content>
+
+<script runat="server">
+    protected void Page_Init()
+    {
+        MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
+    }
+</script>

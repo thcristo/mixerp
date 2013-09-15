@@ -135,7 +135,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if(!string.IsNullOrWhiteSpace(ShippingChargeTextBox.Text))
             {
-                if(!Information.IsNumeric(ShippingChargeTextBox.Text))
+                if(!MixERP.Net.Common.Conversion.IsNumeric(ShippingChargeTextBox.Text))
                 {
                     MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(ShippingChargeTextBox);
                     return;

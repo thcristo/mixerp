@@ -212,8 +212,6 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         throw;
                     }
                 }
-
-                return 0;
             }
         }
 

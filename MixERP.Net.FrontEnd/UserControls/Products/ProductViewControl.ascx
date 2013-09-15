@@ -261,5 +261,6 @@ http://mozilla.org/MPL/2.0/.
             $('.wrapper-dropdown-5').removeClass('active');
         });
 
-    });
+    });
+
 </script>

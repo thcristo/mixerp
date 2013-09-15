@@ -213,6 +213,12 @@ namespace MixERP.Net.Common
             return false;
         }
 
+        public static bool IsNumeric(string value)
+        {
+            double number;
+            return double.TryParse(value, out number);        
+        }
+
         public static string TryCastString(object value)
         {
             try

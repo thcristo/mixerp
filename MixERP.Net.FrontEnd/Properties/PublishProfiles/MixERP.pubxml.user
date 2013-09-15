@@ -49,7 +49,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2013 11:33:03</publishTime>
     </File>
     <File Include="bin/AjaxControlToolkit.dll">
-      <publishTime>09/13/2013 11:33:03</publishTime>
+      <publishTime>11/16/2011 14:21:58</publishTime>
     </File>
     <File Include="bin/AjaxMin.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
@@ -66,11 +66,23 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/de/AjaxControlToolkit.resources.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
     </File>
+    <File Include="bin/de/Npgsql.resources.dll">
+      <publishTime>09/02/2012 23:03:22</publishTime>
+    </File>
     <File Include="bin/es/AjaxControlToolkit.resources.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
     </File>
+    <File Include="bin/es/Npgsql.resources.dll">
+      <publishTime>09/02/2012 23:03:22</publishTime>
+    </File>
+    <File Include="bin/fi/Npgsql.resources.dll">
+      <publishTime>09/02/2012 23:03:22</publishTime>
+    </File>
     <File Include="bin/fr/AjaxControlToolkit.resources.dll">
-      <publishTime>09/13/2013 11:33:03</publishTime>
+      <publishTime>11/16/2011 14:22:00</publishTime>
+    </File>
+    <File Include="bin/fr/Npgsql.resources.dll">
+      <publishTime>09/02/2012 23:03:22</publishTime>
     </File>
     <File Include="bin/he/AjaxControlToolkit.resources.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
@@ -90,6 +102,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/ja/AjaxControlToolkit.resources.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
     </File>
+    <File Include="bin/ja/Npgsql.resources.dll">
+      <publishTime>09/02/2012 23:03:22</publishTime>
+    </File>
     <File Include="bin/ko/AjaxControlToolkit.resources.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
     </File>
@@ -97,16 +112,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2013 11:33:03</publishTime>
     </File>
     <File Include="bin/MixERP.net.BusinessLayer.dll">
-      <publishTime>09/14/2013 04:32:52</publishTime>
+      <publishTime>09/16/2013 01:54:08</publishTime>
     </File>
     <File Include="bin/MixERP.net.Common.dll">
-      <publishTime>09/14/2013 04:32:51</publishTime>
+      <publishTime>09/16/2013 01:54:07</publishTime>
     </File>
     <File Include="bin/MixERP.net.DatabaseLayer.dll">
-      <publishTime>09/14/2013 04:32:51</publishTime>
+      <publishTime>09/16/2013 01:54:07</publishTime>
     </File>
     <File Include="bin/MixERP.net.FrontEnd.dll">
-      <publishTime>09/15/2013 00:36:06</publishTime>
+      <publishTime>09/16/2013 01:54:09</publishTime>
     </File>
     <File Include="bin/Mono.Security.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
@@ -115,7 +130,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2013 11:33:03</publishTime>
     </File>
     <File Include="bin/Npgsql.dll">
-      <publishTime>09/13/2013 11:33:03</publishTime>
+      <publishTime>09/02/2012 23:03:22</publishTime>
     </File>
     <File Include="bin/Pes.Utility.dll">
       <publishTime>08/30/2013 14:30:55</publishTime>
@@ -137,6 +152,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/zh-CHT/AjaxControlToolkit.resources.dll">
       <publishTime>09/13/2013 11:33:03</publishTime>
+    </File>
+    <File Include="bin/zh-CN/Npgsql.resources.dll">
+      <publishTime>09/02/2012 23:03:22</publishTime>
     </File>
     <File Include="ContentMaster.Master">
       <publishTime>09/13/2013 11:33:03</publishTime>
@@ -991,7 +1009,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2013 11:33:04</publishTime>
     </File>
     <File Include="Sales/Quotation.aspx">
-      <publishTime>09/15/2013 00:35:25</publishTime>
+      <publishTime>09/15/2013 21:32:30</publishTime>
     </File>
     <File Include="Sales/Receipt.aspx">
       <publishTime>09/13/2013 11:33:04</publishTime>
@@ -2128,7 +2146,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/14/2013 01:51:37</publishTime>
     </File>
     <File Include="Themes/purple/main.css">
-      <publishTime>09/15/2013 00:24:45</publishTime>
+      <publishTime>09/15/2013 21:58:08</publishTime>
     </File>
     <File Include="Themes/purple/mixerp-logo-light.png">
       <publishTime>09/13/2013 11:33:06</publishTime>
@@ -2155,10 +2173,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2013 11:33:06</publishTime>
     </File>
     <File Include="UserControls/Products/ProductControl.ascx">
-      <publishTime>09/13/2013 11:33:06</publishTime>
+      <publishTime>09/15/2013 21:26:15</publishTime>
     </File>
     <File Include="UserControls/Products/ProductViewControl.ascx">
-      <publishTime>09/14/2013 03:39:54</publishTime>
+      <publishTime>09/15/2013 21:32:27</publishTime>
     </File>
     <File Include="UserControls/ReportControl.ascx">
       <publishTime>09/13/2013 11:33:06</publishTime>
@@ -2194,7 +2212,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/13/2013 11:33:06</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/15/2013 00:36:07</publishTime>
+      <publishTime>09/16/2013 01:54:10</publishTime>
     </File>
   </ItemGroup>
 </Project>

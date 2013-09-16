@@ -565,6 +565,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flags.
+        /// </summary>
+        internal static string Flags {
+            get {
+                return ResourceManager.GetString("Flags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flag Selection.
         /// </summary>
         internal static string FlagSelection {

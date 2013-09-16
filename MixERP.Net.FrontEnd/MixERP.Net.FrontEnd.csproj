@@ -46,17 +46,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\AjaxControlToolkit\AjaxControlToolkit.dll</HintPath>
     </Reference>
-    <Reference Include="AjaxMin, Version=4.97.4951.28478, Culture=neutral, PublicKeyToken=21ef50ce11b5d80f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\AjaxControlToolkit\AjaxMin.dll</HintPath>
-    </Reference>
     <Reference Include="AspNetPager, Version=7.4.3.0, Culture=neutral, PublicKeyToken=fb0a0fe055d40fd4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\AspNetPager.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Dependencies\AjaxControlToolkit\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -828,6 +820,13 @@
     <Compile Include="Setup\FiscalYear.aspx.designer.cs">
       <DependentUpon>FiscalYear.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Setup\Flags.aspx.cs">
+      <DependentUpon>Flags.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Setup\Flags.aspx.designer.cs">
+      <DependentUpon>Flags.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Setup\Frequency.aspx.cs">
       <DependentUpon>Frequency.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1495,6 +1494,7 @@
     <Content Include="Setup\Counters.aspx" />
     <Content Include="Setup\Departments.aspx" />
     <Content Include="Setup\FiscalYear.aspx" />
+    <Content Include="Setup\Flags.aspx" />
     <Content Include="Setup\Frequency.aspx" />
     <Content Include="Setup\Index.aspx" />
     <Content Include="Setup\Offices.aspx" />

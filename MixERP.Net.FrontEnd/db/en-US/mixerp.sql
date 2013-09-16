@@ -149,6 +149,9 @@ DROP DOMAIN IF EXISTS image_path;
 CREATE DOMAIN image_path
 AS text;
 
+DROP DOMAIN IF EXISTS color;
+CREATE DOMAIN color
+AS text;
 
 
 CREATE TABLE office.users
@@ -167,27 +170,29 @@ CREATE TABLE core.flag_types
 (
 	flag_type_id				SERIAL NOT NULL PRIMARY KEY,
 	flag_type_name				national character varying(24) NOT NULL,
-	flag_color				text,
+	flag_color				color NOT NULL,
 	audit_user_id				integer NULL REFERENCES office.users(user_id),
 	audit_ts				TIMESTAMP WITH TIME ZONE NULL DEFAULT(NOW())
 );
 
 INSERT INTO core.flag_types(flag_type_name, flag_color)
-SELECT 'Important',		'#D61D04' UNION ALL
-SELECT 'Critical', 		'#EB0CDC' UNION ALL
-SELECT 'Review', 		'#A11CD6' UNION ALL
-SELECT 'Todo', 			'#B4BA07' UNION ALL
-SELECT 'Ok', 			'#8DC41D';
+SELECT 'Critical', 		'#FC8A68' UNION ALL
+SELECT 'Important',		'#FAD5AA' UNION ALL
+SELECT 'Review', 		'#F2E4F7' UNION ALL
+SELECT 'Todo', 			'#CDF2FA' UNION ALL
+SELECT 'OK', 			'#D7E868';
 
 CREATE TABLE core.flags
 (
 	flag_id					BIGSERIAL NOT NULL PRIMARY KEY,
 	user_id					integer NOT NULL REFERENCES office.users(user_id),
 	flag_type_id				integer NOT NULL REFERENCES core.flag_types(flag_type_id),
-	resource				text,
-	resource_id				text	
+	resource				text, --Fully qualified repository name. Example: crm.lead_sources.
+	resource_id				text --The unique idenfier for lookup. Example: lead_source_id.
 );
 
+CREATE UNIQUE INDEX flags_user_id_resource_resource_id_uix
+ON core.flags(user_id, UPPER(resource), UPPER(resource_id));
 
 CREATE FUNCTION core.get_flag_type_id
 (
@@ -970,6 +975,8 @@ UNION ALL SELECT 'Setup & Maintenance', NULL, 'CSM', 1, core.get_menu_id('CRM')
 UNION ALL SELECT 'Lead Sources Setup', '/CRM/Setup/LeadSources.aspx', 'CRMLS', 2, core.get_menu_id('CSM')
 UNION ALL SELECT 'Lead Status Setup', '/CRM/Setup/LeadStatuses.aspx', 'CRMLST', 2, core.get_menu_id('CSM')
 UNION ALL SELECT 'Opportunity Stages Setup', '/CRM/Setup/OpportunityStages.aspx', 'CRMOS', 2, core.get_menu_id('CSM')
+UNION ALL SELECT 'Miscellaneous Parameters', NULL, 'SMP', 1, core.get_menu_id('SE')
+UNION ALL SELECT 'Flags', '/Setup/Flags.aspx', 'TRF', 2, core.get_menu_id('SMP')
 UNION ALL SELECT 'Office Setup', NULL, 'SOS', 1, core.get_menu_id('SE')
 UNION ALL SELECT 'Office & Branch Setup', '/Setup/Offices.aspx', 'SOB', 2, core.get_menu_id('SOS')
 UNION ALL SELECT 'Department Setup', '/Setup/Departments.aspx', 'SDS', 2, core.get_menu_id('SOS')

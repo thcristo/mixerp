@@ -630,4 +630,7 @@
   <data name="MergeBatchToSalesDelivery" xml:space="preserve">
     <value>Merge Batch to Sales Delivery</value>
   </data>
+  <data name="Flags" xml:space="preserve">
+    <value>Flags</value>
+  </data>
 </root>

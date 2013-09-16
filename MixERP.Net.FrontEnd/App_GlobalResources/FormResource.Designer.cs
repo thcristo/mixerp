@@ -1150,6 +1150,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flag Type Id.
+        /// </summary>
+        internal static string flag_type_id {
+            get {
+                return ResourceManager.GetString("flag_type_id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flag Type Name.
+        /// </summary>
+        internal static string flag_type_name {
+            get {
+                return ResourceManager.GetString("flag_type_name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frequency Code.
         /// </summary>
         internal static string frequency_code {

@@ -1089,4 +1089,10 @@
   <data name="flag_color" xml:space="preserve">
     <value>Flag Color</value>
   </data>
+  <data name="flag_type_id" xml:space="preserve">
+    <value>Flag Type Id</value>
+  </data>
+  <data name="flag_type_name" xml:space="preserve">
+    <value>Flag Type Name</value>
+  </data>
 </root>

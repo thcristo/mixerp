@@ -70,12 +70,12 @@ http://mozilla.org/MPL/2.0/.
 </div>
 <asp:Panel ID="GridPanel" runat="server" Width="1024px" ScrollBars="Auto">
     <asp:GridView
-        ID="SalesQuotationGridView"
+        ID="ProductViewGridView"
         runat="server"
         CssClass="grid"
         Width="1424px"
         AutoGenerateColumns="false"
-        OnRowDataBound="SalesQuotationGridView_RowDataBound">
+        OnRowDataBound="ProductViewGridView_RowDataBound">
         <Columns>
             <asp:TemplateField HeaderStyle-Width="56px" HeaderText="actions">
                 <ItemTemplate>
@@ -138,12 +138,12 @@ http://mozilla.org/MPL/2.0/.
 
         using(System.Data.DataTable table = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.GetView("Sales.Quotation", dateFrom, dateTo, office, party, priceType, user, referenceNumber, statementReference))
         {
-            SalesQuotationGridView.DataSource = table;
-            SalesQuotationGridView.DataBind();
+            ProductViewGridView.DataSource = table;
+            ProductViewGridView.DataBind();
         }
     }
 
-    protected void SalesQuotationGridView_RowDataBound(object sender, GridViewRowEventArgs e)
+    protected void ProductViewGridView_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if(e.Row.RowType == DataControlRowType.Header)
         {
@@ -185,7 +185,7 @@ http://mozilla.org/MPL/2.0/.
 </script>
 
 <script type="text/javascript">
-    $('#SalesQuotationGridView tr').click(function () {
+    $('#ProductViewGridView tr').click(function () {
         console.log('Grid row was clicked. Now, searching the radio button.');
         var checkBox = $(this).find('td input:checkbox')
         console.log('The check box was found.');

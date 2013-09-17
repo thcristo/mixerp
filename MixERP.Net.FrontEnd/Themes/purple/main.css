@@ -991,3 +991,15 @@ input.date
     padding: 12px;
     background-color: #F8F2FF;
 }
+
+#SearchTextBox
+{
+    border: 1px solid #CA95FF;
+    margin:0px;
+    height:18px;
+    width:95%;
+    background-image: url('/Resource/Icons/find-16.png');
+    background-repeat: no-repeat;
+    background-position-x:right;
+    background-position-y:center;
+}

@@ -633,4 +633,7 @@
   <data name="Flags" xml:space="preserve">
     <value>Flags</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
 </root>

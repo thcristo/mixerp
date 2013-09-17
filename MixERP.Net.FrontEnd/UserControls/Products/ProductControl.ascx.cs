@@ -175,19 +175,51 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if(!IsPostBack)
             {
-                this.ClearSession();
+                this.ClearSession(this.ID);
             }
-
+            
+            this.LoadValuesFromSession();
             this.InitializeControls();
             this.BindGridView();
             ScriptManager1.RegisterAsyncPostBackControl(ProductGridView);
         }
 
-        private void ClearSession()
+        private void LoadValuesFromSession()
         {
-            if(Session[this.ID] != null)
+            if(Session["Product"] == null)
             {
-                Session.Remove(this.ID);
+                return;
+            }
+
+            MixERP.Net.Common.Models.Transactions.ProductModel model = Session["Product"] as MixERP.Net.Common.Models.Transactions.ProductModel;
+
+            if(model == null)
+            {
+                return;
+            }
+
+            if(PartyDropDownList.SelectedItem != null)
+            {
+                PartyDropDownList.SelectedItem.Value = model.PartyId.ToString();
+            }
+
+            if(PriceTypeDropDownList.SelectedItem != null)
+            {
+                PriceTypeDropDownList.SelectedItem.Value = model.PriceTypeId.ToString();
+            }
+
+            ReferenceNumberTextBox.Text = model.ReferenceNumber;
+            StatementReferenceTextBox.Text = model.StatementReference;
+
+            Session[this.ID] = model.View;
+            this.ClearSession("Product");
+        }
+
+        private void ClearSession(string key)
+        {
+            if(Session[key] != null)
+            {
+                Session.Remove(key);
             }
         }
 

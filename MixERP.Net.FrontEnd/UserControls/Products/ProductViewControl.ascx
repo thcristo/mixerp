@@ -7,6 +7,56 @@ http://mozilla.org/MPL/2.0/.
 --%>
 <%@ Control Language="C#" AutoEventWireup="True" CodeBehind="ProductViewControl.ascx.cs" Inherits="MixERP.Net.FrontEnd.UserControls.Products.ProductViewControl" %>
 <AjaxCTK:ToolkitScriptManager ID="ScriptManager1" runat="server" />
+<h1>
+    <asp:Literal ID="TitleLiteral" runat="server" Text="<%$Resources:Titles, SalesQuotation %>" />
+</h1>
+<hr class="hr" />
+
+<div class="vpad12">
+    <table class="valignmiddle" style="border-collapse: collapse;">
+        <tr>
+            <td>
+                <asp:LinkButton ID="AddNewLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, AddNew %>"
+                    OnClientClick="window.location='/Sales/Entry/Quotation.aspx';return false;" />
+
+                <asp:LinkButton
+                    ID="MergeToSalesOrderLinkButton"
+                    runat="server"
+                    CssClass="menu"
+                    Text="<%$Resources:Titles, MergeBatchToSalesOrder %>"
+                    OnClientClick="return getSelectedItems();"
+                    OnClick="MergeToSalesOrderLinkButton_Click"
+                     />
+                <asp:LinkButton ID="MergeToSalesDeliveryLinkButton" runat="server" CssClass="menu" Text="<%$Resources:Titles, MergeBatchToSalesDelivery %>" />
+            </td>
+            <td>
+                <a href="#" class="menu" id="flagButton">Flag This Transaction</a>
+            </td>
+        </tr>
+    </table>
+
+
+    <div id="flag-popunder" style="position: absolute; width: 300px; display: none;" class="popunder">
+        <h3>Flag This Transaction</h3>
+        <hr class="hr" />
+
+        <div class="note">
+            You can mark this transaction with a flag, however you will not be able to see the flags created by other users.                
+        </div>
+        <br />
+        <p>Please select a flag</p>
+        <p>
+            <asp:DropDownList ID="FlagDropDownList" runat="server" Width="300px">
+            </asp:DropDownList>
+        </p>
+        <p>
+            <asp:Button ID="UpdateButton" runat="server" Text="Udate" CssClass="menu" />
+            <a href="#" onclick="$('#flag-popunder').toggle(500);" class="menu">Close</a>
+        </p>
+    </div>
+</div>
+<asp:Label ID="ErrorLabel" runat="server" CssClass="error" />
+
 <div id="filter" class="vpad8">
     <table class="form">
         <tr>
@@ -108,16 +158,58 @@ http://mozilla.org/MPL/2.0/.
         </Columns>
     </asp:GridView>
 </asp:Panel>
-
+<asp:HiddenField ID="SelectedValuesHidden" runat="server" />
 
 <script runat="server">
-    protected void Page_Init(object sender, EventArgs e)
+    protected void Page_Init()
     {
+        MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(FlagDropDownList, "core", "flag_types", "flag_type_id", "flag_type_name");
     }
-
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         this.LoadGridView();
+    }
+
+    protected void MergeToSalesOrderLinkButton_Click(object sender, EventArgs e)
+    {
+        //Get the comma separated selected values.
+        string selectedValues = SelectedValuesHidden.Value;
+
+        //Check if something was selected.
+        if(string.IsNullOrWhiteSpace(selectedValues))
+        {
+            return;
+        }
+
+        //Create a collection object to store the IDs.
+        System.Collections.ObjectModel.Collection<int> values = new System.Collections.ObjectModel.Collection<int>();
+
+        //Iterate through each value in the selected values
+        //and determine if each value is a number.
+        foreach(string value in selectedValues.Split(','))
+        {
+            //Parse the value to integer.
+            int val = MixERP.Net.Common.Conversion.TryCastInteger(value); 
+            
+            //We already know that an ID cannot be a zero value.
+            if(val > 0)
+            {
+                //If the object "val" has a greater than zero,
+                //add it to the collection.
+                values.Add(val);
+            }        
+        }
+
+        bool belongToSameParty = MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.TransactionIdsBelongToSameParty(values);
+
+        if(!belongToSameParty)
+        {
+            ErrorLabel.Text = "Cannot merge quotations of multiple parties into a single batch. Please try again.";
+            return;
+        }
+
+        MixERP.Net.BusinessLayer.Transactions.NonGLStockTransaction.MergeSalesQuotationToSalesOrder(values);                
     }
 
     protected void ShowButton_Click(object sender, EventArgs e)
@@ -185,6 +277,76 @@ http://mozilla.org/MPL/2.0/.
 </script>
 
 <script type="text/javascript">
+    var getSelectedItems = function () {
+        var selection = [];
+
+        //Get the grid instance.
+        var grid = $("#ProductViewGridView");
+
+        //Set the position of the column which contains the checkbox.
+        var checkBoxColumnPosition = "2";
+
+        //Set the position of the column which contains id.
+        var idColumnPosition = "3";
+
+        //Iterate through each row to investigate the selection.
+        grid.find("tr").each(function () {
+
+            //Get an instance of the current row in this loop.
+            var row = $(this);
+
+            //Get the instance of the cell which contains the checkbox.
+            var checkBoxContainer = row.select("td:nth-child(" + checkBoxColumnPosition + ")");
+
+            //Get the instance of the checkbox from the container.
+            var checkBox = checkBoxContainer.find("input");
+
+            if (checkBox) {
+                //Check if the checkbox was selected or checked.
+                if (checkBox.attr("checked") == "checked") {
+                    //Get ID from the associated cell.
+                    var id = row.find("td:nth-child(" + idColumnPosition + ")").html();
+
+                    //Add the ID to the array.
+                    selection.push(id);
+                }
+            }
+        });
+
+
+        if (selection.length > 0) {
+            $("#SelectedValuesHidden").val(selection.join(','));
+            return true;
+        }
+        else {
+            alert("<%= Resources.Labels.NothingSelected %>");
+            return false;
+        }
+
+        return false;
+    }
+
+    //Get FlagButton instance.
+    var flagButton = $("#flagButton");
+
+    flagButton.click(function () {
+        //Get flag div instance which will be displayed under the button.
+        var popunder = $("#flag-popunder");
+
+        //Get FlagButton's position and height information.
+        var left = $(this).position().left;
+        var top = $(this).position().top;
+        var height = $(this).height();
+
+        //Margin in pixels.
+        var margin = 12;
+
+        popunder.css("left", left);
+        popunder.css("top", top + height + margin);
+        popunder.show(500);
+    });
+
+
     $('#ProductViewGridView tr').click(function () {
         console.log('Grid row was clicked. Now, searching the radio button.');
         var checkBox = $(this).find('td input:checkbox')

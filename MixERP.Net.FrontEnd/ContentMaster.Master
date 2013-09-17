@@ -20,7 +20,11 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
     <table id="menu-table" width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td class="menu2" id="menu2">
+            <td class="menu2" id="menu2">                
+                <div style="padding:12px 0px 0px 12px;">
+                    <asp:TextBox ID="SearchTextBox" runat="server" />
+                </div>
+
                 <asp:Literal ID="ContentMenuLiteral" runat="server" />
             </td>
             <td>

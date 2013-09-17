@@ -65,6 +65,7 @@
     <Compile Include="Models\Core\Menus.cs" />
     <Compile Include="Models\Transactions\JournalDetailsModel.cs" />
     <Compile Include="Models\Transactions\ProductDetailsModel.cs" />
+    <Compile Include="Models\Transactions\ProductModel.cs" />
     <Compile Include="Models\Transactions\StockMasterDetailModel.cs" />
     <Compile Include="Models\Transactions\StockMasterModel.cs" />
     <Compile Include="Models\Transactions\TranactionMasterModel.cs" />

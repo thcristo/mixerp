@@ -1101,28 +1101,28 @@
     <Content Include="Reports\Assets\Header.html" />
     <Content Include="Reports\ReportMaster.aspx" />
     <Content Include="Reports\ReportViewer.aspx" />
-    <Content Include="Reports\Sources\en-US\Sales.View.Sales.Quotation.xml">
+    <Content Include="Reports\Sources\Sales.View.Sales.Quotation.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Sources\en-US\Sales.View.Sales.CustomerDeliveryNote.xml">
+    <Content Include="Reports\Sources\Sales.View.Sales.CustomerDeliveryNote.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Sources\en-US\Sales.View.Sales.Delivery.xml">
+    <Content Include="Reports\Sources\Sales.View.Sales.Delivery.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Sources\en-US\Purchase.View.Purchase.Invoice.xml">
+    <Content Include="Reports\Sources\Purchase.View.Purchase.Invoice.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Sources\en-US\Transactions.GLEntry.xml">
+    <Content Include="Reports\Sources\Transactions.GLEntry.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Sources\en-US\Sales.View.Sales.CustomerInvoice.xml">
+    <Content Include="Reports\Sources\Sales.View.Sales.CustomerInvoice.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Sources\en-US\Office.Login.xml">
+    <Content Include="Reports\Sources\Office.Login.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Reports\Sources\en-US\Sales.View.Sales.Invoice.xml">
+    <Content Include="Reports\Sources\Sales.View.Sales.Invoice.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Resource\Icons\bottom-16.png" />
@@ -1131,6 +1131,7 @@
     <Content Include="Resource\Icons\email-16.png" />
     <Content Include="Resource\Icons\excel-16.png" />
     <Content Include="Resource\Icons\filter-16.png" />
+    <Content Include="Resource\Icons\find-16.png" />
     <Content Include="Resource\Icons\password-16.png" />
     <Content Include="Resource\Icons\pdf-16.png" />
     <Content Include="Resource\Icons\print-16.png" />
@@ -1644,7 +1645,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>34327</DevelopmentServerPort>
+          <DevelopmentServerPort>19119</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:50905/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

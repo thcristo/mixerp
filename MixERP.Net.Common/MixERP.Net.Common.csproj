@@ -63,6 +63,7 @@
     <Compile Include="Helpers\Parameters.cs" />
     <Compile Include="Helpers\Switches.cs" />
     <Compile Include="Models\Core\Menus.cs" />
+    <Compile Include="Models\Core\ProductControlModel.cs" />
     <Compile Include="Models\Transactions\JournalDetailsModel.cs" />
     <Compile Include="Models\Transactions\ProductDetailsModel.cs" />
     <Compile Include="Models\Transactions\ProductModel.cs" />

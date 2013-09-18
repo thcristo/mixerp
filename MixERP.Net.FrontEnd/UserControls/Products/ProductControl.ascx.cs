@@ -6,41 +6,77 @@ If a copy of the MPL was not distributed  with this file, You can obtain one at
 http://mozilla.org/MPL/2.0/.
 ***********************************************************************************/
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
-using System.Threading;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Microsoft.VisualBasic;
 
 namespace MixERP.Net.FrontEnd.UserControls.Products
 {
+    /// <summary>
+    /// Stay warned, this is very very big class and maybe complex as well and needs improvements.
+    /// This UserControl provides a common interface for all transactions that are related to
+    /// stock and/or inventory. Everything is handled in this class, except for the Save event.
+    /// The save event is exposed to the page containing this control and should be handled there.
+    /// </summary>
     public partial class ProductControl : System.Web.UI.UserControl
     {
+        /// <summary>
+        /// Transaction book for products are Sales and Purchase.
+        /// </summary>
         public MixERP.Net.Common.Models.Transactions.TranBook Book { get; set; }
+ 
+        /// <summary>
+        /// Sub transaction books are maintained for breaking down the Purchase and Sales transaction into smaller steps
+        /// such as Quotations, Orders, Deliveries, e.t.c.
+        /// </summary>
         public MixERP.Net.Common.Models.Transactions.SubTranBook SubBook { get; set; }
+     
+        /// <summary>
+        /// The title displayed in the form.
+        /// </summary>
         public string Text { get; set; }
-        public GridView Grid { get { return ProductGridView; } }
+
+        /// <summary>
+        /// A readonly instance of the GridView
+        /// </summary>
+        //public GridView Grid { get { return ProductGridView; } }
+
+        /// <summary>
+        /// This property when set to true will display the RadioButtonList control which contains the transaction types.
+        /// Transaction types are Cash and Credit.
+        /// </summary>
         public bool DisplayTransactionTypeRadioButtonList { get; set; }
+
+        /// <summary>
+        /// This property when set to true will verify the stock against the credit inventory transactions or "Sales".
+        /// Since negative stock is not allowed, you will not be able to add a product to the grid.
+        /// This property must be enabled for Sales transaction which affect the available inventory on hand.
+        /// Please also note that even when this property is enabled, the products having the switch "Maintain Stock" set to "Off"
+        /// will not be checked for stock availability.
+        /// This property should be disabled or set to false for stock transactions that do not affect stock such as "Quotations", "Orders", e.t.c.
+        /// </summary>
         public bool VerifyStock { get; set; }
+
+        /// <summary>
+        /// This property when enabled will display cash repositories and their available balance.
+        /// Not all availble cash repositories will be displayed here but those which belong to the current (or logged in) branch office.
+        /// This property must be enabled for transactions which have affect on cash ledger, namely "Direct Purchase" and "Direct Sales".
+        /// </summary>
         public bool ShowCashRepository { get; set; }
 
         /// <summary>
-        /// Representation of pre assigned data for presentation.
+        /// This property is used to temporarily store pre assigned instance of transactions for merging transactions
+        /// and creating a batch transactions.
+        /// Some cases:
+        /// Multiple Sales Quotations --> Sales Order.
+        /// Multiple Sales Quotations --> Sales Delivery.
         /// </summary>
         private MixERP.Net.Common.Models.Transactions.MergeModel model = new Common.Models.Transactions.MergeModel();
 
-        public ControlCollection GetForm
-        {
-            get
-            {
-                return this.GetControls();
-            }
-        }
-
+        /// <summary>
+        /// This class is a representation of the controls in this UserControl.
+        /// </summary>
         public class ControlCollection
         {
             public MixERP.Net.FrontEnd.UserControls.DateTextBox DateTextBox { get; set; }
@@ -64,6 +100,10 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             public TextBox StatementReferenceTextBox { get; set; }
         }
 
+        /// <summary>
+        /// This function returns a new instance of ControlCollection class.
+        /// </summary>
+        /// <returns></returns>
         private ControlCollection GetControls()
         {
             ControlCollection collection = new ControlCollection();
@@ -89,7 +129,22 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             return collection;
         }
 
+        /// <summary>
+        /// This property provides a read-only acess to all the controls of this UserControl.
+        /// This property is accessed after the user clicks the "Save" button.
+        /// The values of each control is read and then sent to the database layer.
+        /// </summary>
+        public ControlCollection GetForm
+        {
+            get
+            {
+                return this.GetControls();
+            }
+        }
 
+        /// <summary>
+        /// This property set the width of the top panel.
+        /// </summary>
         public Unit TopPanelWidth
         {
             get
@@ -103,73 +158,156 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         }
 
-        public event EventHandler SaveButtonClick;
 
-        public virtual void OnSaveButtonClick(object sender, EventArgs e)
-        {
-            if(SaveButtonClick != null)
-            {
-                this.SaveButtonClick(sender, e);
-            }
-        }
+        /// <summary>
+        /// This event will be raised on SaveButon's click event.
+        /// </summary>
+        public event EventHandler SaveButtonClick;
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             //Validation Check Start
+
+            //Check the number of products in the grid.
             if(ProductGridView.Rows.Count.Equals(0))
             {
                 ErrorLabel.Text = Resources.Warnings.NoItemFound;
                 return;
             }
 
+            //If this is a purchase on cash transaction, we need to make sure
+            //that the selected cash repository has enough balance for the credit transaction.
+            //Remember: 
+            //1. MixERP does not allow negative cash transaction.
+            //2. Cash is maintained on LIFO principal.
+
+            //The MixERP LIFO principal
+
+            //LAST IN
+            //The cash would be in at last --> Last In. 
+            //This means that you would have to first approve a transaction which has cash on the debit side before it shows up in the effective balance. 
+            //If you approve the transaction, cash is in-->Last In.
+            //If you reject or ignore the transaction, there is no effect.
+
+            //FIRST OUT
+            //The cash would be out at first --> First Out.
+            //This means that even when you have not approved a transaction which has cash on the credit side, it reduces the cash balance. 
+            //So, if you approve the transaction, there is no effect since the cash was already out-->First Out. 
+            //The actual cash balance is restored only when you reject the transaction.
+ 
+            //So, no point on getting confused here. This calculations is happened on the database level.
+            //If anything goes wrong, throw stones to your DBAs.
+
             if(this.Book == Common.Models.Transactions.TranBook.Purchase && CashRepositoryRow.Visible)
             {
+                //Update cash repository balance.
                 this.UpdateRepositoryBalance();
 
+                //Get the balance of the cash repository.
                 decimal repositoryBalance = MixERP.Net.Common.Conversion.TryCastDecimal(CashRepositoryBalanceTextBox.Text);
+
+                //Get the grand total credit amount.
                 decimal grandTotal = MixERP.Net.Common.Conversion.TryCastDecimal(GrandTotalTextBox.Text);
 
+                //If the amount to pay is greater than available cash balance.
                 if(grandTotal > repositoryBalance)
                 {
+                    //Display an error message to the user stating that there's not enough cash to post this transaction.
                     ErrorLabel.Text = Resources.Warnings.NotEnoughCash;
                     return;
                 }
             }
 
+            //Check if the shipping charge textbox has a value.
             if(!string.IsNullOrWhiteSpace(ShippingChargeTextBox.Text))
             {
+               //Check if the value actually was a number.
                 if(!MixERP.Net.Common.Conversion.IsNumeric(ShippingChargeTextBox.Text))
                 {
+                    //You could never guess in your wildest dream how insanse a user could behave.
                     MixERP.Net.BusinessLayer.Helpers.FormHelper.MakeDirty(ShippingChargeTextBox);
                     return;
                 }
             }
-
-
             //Validation Check End
+            //I am happy now.
 
             //Now exposing the button click event.
             this.OnSaveButtonClick(sender, e);
         }
 
+        /// <summary>
+        ///This method when called will raise a "SaveButtonClick" event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public virtual void OnSaveButtonClick(object sender, EventArgs e)
+        {
+            //Check if the event can be used.
+            if (SaveButtonClick != null)
+            {
+                //Raise the event.
+                this.SaveButtonClick(sender, e);
+            }
+        }
+
+
+        /// <summary>
+        /// This method handles the grid view's row command event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ProductGridView_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            //We only expect a delete command here.
+            //Be careful if this GridView implements other commands in the future.
+            //Needs refactoring.
+
+
+            //Get an instance of the collection of the products stored in the grid.
             Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> table = this.GetTable();
+
+            //Get the instance of grid view row on which the the command was triggered.
             GridViewRow row = (GridViewRow)(((ImageButton)e.CommandSource).NamingContainer);
+
+            //Get the index of the row.
             int index = row.RowIndex;
 
+            //Remove the product from the collection at the specified index.
             table.RemoveAt(index);
+
+            //Store the new product collection on the session.
             Session[this.ID] = table;
+
+            //Call the method to bind the gridview once again. 
             this.BindGridView();
+
             //UpdatePanel1.Update();
         }
 
+        /// <summary>
+        /// This method is called for each grid view rows' databound event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ProductGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            //Check the row type.
             if(e.Row.RowType == DataControlRowType.DataRow)
             {
-                ImageButton lb = e.Row.FindControl("DeleteImageButton") as ImageButton;
-                ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(lb);
+                //Yeaaaaa! This is a data row. Yipeee!!!!!
+                
+                //Find the image button in this row.
+                ImageButton deleteImageButton = e.Row.FindControl("DeleteImageButton") as ImageButton;
+                
+                //Make sure that we found the image button we were looking for.
+                if (deleteImageButton != null)
+                {
+                    //Wowowowow, we found the button.
+
+                    //Tell the script manager that this button should fire an asynchronous postback event.
+                    ScriptManager.GetCurrent(this.Page).RegisterAsyncPostBackControl(deleteImageButton);
+                }
             }
         }
 

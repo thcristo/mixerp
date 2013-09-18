@@ -12,17 +12,9 @@ using System.Text;
 
 namespace MixERP.Net.Common.Models.Transactions
 {
-    public static class TransactionTypeDomain
+    public enum TransactionType
     {
-        public static string GetDomain(TransactionType type)
-        {
-            if(type == TransactionType.Debit)
-                return "Dr";
-            else if(type == TransactionType.Credit)
-                return "Cr";
-            else
-                throw new InvalidOperationException(MixERP.Net.Common.Helpers.LocalizationHelper.GetResourceString("Warnings", "UnknownTransactionType"));
-        }
-
+        Debit,
+        Credit
     }
 }

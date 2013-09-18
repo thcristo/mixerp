@@ -20,15 +20,18 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 {
     public partial class ProductControl : System.Web.UI.UserControl
     {
-        public enum TranType { Sales, Purchase }
-        public TranType TransactionType { get; set; }
-        public enum SubTranType { Direct, Quotation, Order, /*Readonly*/ Delivery,/*Readonly*/ Receipt, /*Readonly*/ Invoice }
-        public SubTranType SubType { get; set; }
+        public MixERP.Net.Common.Models.Transactions.TranBook Book { get; set; }
+        public MixERP.Net.Common.Models.Transactions.SubTranBook SubBook { get; set; }
         public string Text { get; set; }
         public GridView Grid { get { return ProductGridView; } }
         public bool DisplayTransactionTypeRadioButtonList { get; set; }
         public bool VerifyStock { get; set; }
         public bool ShowCashRepository { get; set; }
+
+        /// <summary>
+        /// Representation of pre assigned data for presentation.
+        /// </summary>
+        private MixERP.Net.Common.Models.Transactions.MergeModel model = new Common.Models.Transactions.MergeModel();
 
         public ControlCollection GetForm
         {
@@ -119,7 +122,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            if(this.TransactionType == TranType.Purchase && CashRepositoryRow.Visible)
+            if(this.Book == Common.Models.Transactions.TranBook.Purchase && CashRepositoryRow.Visible)
             {
                 this.UpdateRepositoryBalance();
 
@@ -177,12 +180,13 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             {
                 this.ClearSession(this.ID);
             }
-            
-            this.LoadValuesFromSession();
+
             this.InitializeControls();
+            this.LoadValuesFromSession();
             this.BindGridView();
             ScriptManager1.RegisterAsyncPostBackControl(ProductGridView);
         }
+
 
         private void LoadValuesFromSession()
         {
@@ -191,21 +195,18 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            MixERP.Net.Common.Models.Transactions.ProductModel model = Session["Product"] as MixERP.Net.Common.Models.Transactions.ProductModel;
+            model = Session["Product"] as MixERP.Net.Common.Models.Transactions.MergeModel;
 
             if(model == null)
             {
                 return;
             }
 
-            if(PartyDropDownList.SelectedItem != null)
-            {
-                PartyDropDownList.SelectedItem.Value = model.PartyId.ToString();
-            }
+            PartyDropDownListCascadingDropDown.SelectedValue = model.PartyCode.ToString();
 
             if(PriceTypeDropDownList.SelectedItem != null)
             {
-                PriceTypeDropDownList.SelectedItem.Value = model.PriceTypeId.ToString();
+                MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.SetSelectedValue(PriceTypeDropDownList, model.PriceTypeId.ToString());
             }
 
             ReferenceNumberTextBox.Text = model.ReferenceNumber;
@@ -225,7 +226,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadCostCenters()
         {
-            if(this.SubType == SubTranType.Direct || this.SubType == SubTranType.Invoice || this.SubType == SubTranType.Delivery || this.SubType == SubTranType.Receipt)
+            if(this.SubBook == Common.Models.Transactions.SubTranBook.Direct || this.SubBook == Common.Models.Transactions.SubTranBook.Invoice || this.SubBook == Common.Models.Transactions.SubTranBook.Delivery || this.SubBook == Common.Models.Transactions.SubTranBook.Receipt)
             {
                 MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(CostCenterDropDownList, "office", "cost_centers", "cost_center_id", MixERP.Net.BusinessLayer.Office.CostCenters.GetDisplayField());
             }
@@ -237,7 +238,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadStores()
         {
-            if(this.SubType == SubTranType.Direct || this.SubType == SubTranType.Invoice || this.SubType == SubTranType.Delivery || this.SubType == SubTranType.Receipt)
+            if(this.SubBook == Common.Models.Transactions.SubTranBook.Direct || this.SubBook == Common.Models.Transactions.SubTranBook.Invoice || this.SubBook == Common.Models.Transactions.SubTranBook.Delivery || this.SubBook == Common.Models.Transactions.SubTranBook.Receipt)
             {
                 MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(StoreDropDownList, "office", "stores", "store_id", MixERP.Net.BusinessLayer.Office.Stores.GetDisplayField());
             }
@@ -289,7 +290,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadTransactionTypeLabel()
         {
-            if(this.TransactionType == TranType.Sales)
+            if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
                 TransactionTypeLiteral.Text = "<label>" + Resources.Titles.SalesType + "</label>";
             }
@@ -301,7 +302,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadItems()
         {
-            if(this.TransactionType == TranType.Sales)
+            if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
                 ItemDropDownListCascadingDropDown.ServiceMethod = "GetItems";
             }
@@ -313,7 +314,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
         private void LoadPriceTypes()
         {
-            if(this.TransactionType == TranType.Sales)
+            if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
                 MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(PriceTypeDropDownList, "core", "price_types", "price_type_id", MixERP.Net.BusinessLayer.Core.PriceTypes.GetDisplayField());
             }
@@ -333,7 +334,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             SalesPersonRow.Visible = false;
 
-            if(this.TransactionType == TranType.Sales)
+            if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
                 MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(SalesPersonDropDownList, "core", "agents", "agent_id", MixERP.Net.BusinessLayer.Core.Agents.GetDisplayField());
                 SalesPersonRow.Visible = true;
@@ -346,9 +347,9 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
             ShippingChargeRow.Visible = false;
             ShippingCompanyRow.Visible = false;
 
-            if(this.TransactionType == TranType.Sales)
+            if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
-                if(this.SubType == SubTranType.Direct || this.SubType == SubTranType.Delivery)
+                if(this.SubBook == Common.Models.Transactions.SubTranBook.Direct || this.SubBook == Common.Models.Transactions.SubTranBook.Delivery)
                 {
                     MixERP.Net.BusinessLayer.Helpers.DropDownListHelper.BindDropDownList(ShippingCompanyDropDownList, "core", "shippers", "shipper_id", MixERP.Net.BusinessLayer.Core.Shippers.GetDisplayField());
 
@@ -600,7 +601,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             if(this.VerifyStock)
             {
-                if(this.TransactionType == TranType.Sales)
+                if(this.Book == Common.Models.Transactions.TranBook.Sales)
                 {
                     if(MixERP.Net.BusinessLayer.Core.Items.IsStockItem(itemCode))
                     {
@@ -657,10 +658,53 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
         {
             if(Session[this.ID] != null)
             {
-                return (Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel>)Session[this.ID];
+                //Get an instance of the ProductDetailsModel collection stored in session.
+                var productCollection = (Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel>)Session[this.ID];
+
+                //Summate the collection.
+                productCollection = SummateProducts(productCollection);
+
+                //Store the summated table in session.
+                Session[this.ID] = productCollection;
+
+                return productCollection;
             }
 
             return new Collection<Common.Models.Transactions.ProductDetailsModel>();
+        }
+
+        private Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> SummateProducts(Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> productCollection)
+        {
+            //Create a new collection of products.
+            Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> collection = new Collection<Common.Models.Transactions.ProductDetailsModel>();
+
+            //Iterate through the supplied product collection.
+            foreach(MixERP.Net.Common.Models.Transactions.ProductDetailsModel product in productCollection)
+            {
+                //Create a product
+                MixERP.Net.Common.Models.Transactions.ProductDetailsModel productInCollection = null;
+
+                if(collection.Count > 0)
+                {
+                    productInCollection = collection.Where(x => x.ItemCode == product.ItemCode && x.ItemName == product.ItemName && x.Unit == product.Unit && x.Price == product.Price && x.Rate == product.Rate).FirstOrDefault();
+                }
+
+                if(productInCollection == null)
+                {
+                    collection.Add(product);
+                }
+                else
+                {
+                    productInCollection.Quantity += product.Quantity;
+                    productInCollection.Amount += product.Amount;
+                    productInCollection.Discount += product.Discount;
+                    productInCollection.Subtotal += product.Subtotal;
+                    productInCollection.Tax += product.Tax;
+                    productInCollection.Total += product.Total;
+                }
+            }
+
+            return collection;
         }
 
         void UnitDropDownList_SelectedIndexChanged(object sender, EventArgs e)
@@ -678,7 +722,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
 
             decimal price = 0;
 
-            if(this.TransactionType == TranType.Sales)
+            if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
                 party = PartyDropDownList.SelectedItem.Value;
                 short priceTypeId = MixERP.Net.Common.Conversion.TryCastShort(PriceTypeDropDownList.SelectedItem.Value);
@@ -744,7 +788,7 @@ namespace MixERP.Net.FrontEnd.UserControls.Products
                 return;
             }
 
-            if(this.TransactionType == TranType.Sales)
+            if(this.Book == Common.Models.Transactions.TranBook.Sales)
             {
                 if(StoreDropDownList.Visible)
                 {

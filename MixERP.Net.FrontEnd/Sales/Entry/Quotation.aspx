@@ -13,8 +13,8 @@ http://mozilla.org/MPL/2.0/.
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
         <mixerp:Product runat="server"
         ID="SalesQuotation"
-        TransactionType="Sales"
-        SubType="Quotation"
+        Book="Sales"
+        SubBook="Quotation"
         Text="<%$Resources:Titles, SalesQuotation %>"
         DisplayTransactionTypeRadioButtonList="false"
         OnSaveButtonClick="SalesQuotation_SaveButtonClick" />

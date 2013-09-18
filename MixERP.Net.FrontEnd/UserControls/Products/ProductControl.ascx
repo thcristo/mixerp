@@ -163,9 +163,8 @@ http://mozilla.org/MPL/2.0/.
                             </td>
                             <td>
                                 <asp:TextBox ID="QuantityTextBox"
-                                    runat="server" type="number"
+                                    runat="server" Text="1"
                                     onblur="updateTax();calculateAmount();" CssClass="right"
-                                    Text="1"
                                     ToolTip="Ctrl + Q" Width="42" />
                             </td>
                             <td>

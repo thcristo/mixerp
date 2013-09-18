@@ -182,6 +182,7 @@ namespace MixERP.Net.DatabaseLayer.Transactions
             string sql = @"SELECT
 	                        transactions.non_gl_stock_master.value_date,
 	                        transactions.non_gl_stock_master.party_id,
+	                        core.parties.party_code,
 	                        transactions.non_gl_stock_master.price_type_id,
 	                        transactions.non_gl_stock_master.reference_number,
 	                        core.items.item_code,
@@ -202,6 +203,8 @@ namespace MixERP.Net.DatabaseLayer.Transactions
                         ON transactions.non_gl_stock_details.item_id = core.items.item_id
                         INNER JOIN core.units
                         ON transactions.non_gl_stock_details.unit_id = core.units.unit_id
+                        INNER JOIN core.parties
+                        ON transactions.non_gl_stock_master.party_id = core.parties.party_id
                         WHERE transactions.non_gl_stock_master.non_gl_stock_master_id IN(" + string.Join(",", parameters) + ");";
 
             //Create a PostgreSQL command object from the SQL string.

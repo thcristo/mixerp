@@ -14,8 +14,8 @@ http://mozilla.org/MPL/2.0/.
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="BodyContentPlaceHolder" runat="server">
     <mixerp:Product runat="server" ID="DirectPurchaseControl"
-        TransactionType="Purchase"
-        SubType="Direct"
+        Book="Purchase"
+        SubBook="Direct"
         Text="<%$Resources:Titles, DirectPurchase %>"
         DisplayTransactionTypeRadioButtonList="true"
         ShowCashRepository="true"

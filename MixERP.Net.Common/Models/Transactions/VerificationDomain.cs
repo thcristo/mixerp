@@ -12,8 +12,6 @@ using System.Text;
 
 namespace MixERP.Net.Common.Models.Transactions
 {
-    public enum VerificationType { Rejected, Closed, Withdrawn, Unapproved, Approved }
-
     public static class VerificationDomain
     {
         public static short GetVerification(VerificationType type)

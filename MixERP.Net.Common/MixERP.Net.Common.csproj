@@ -68,10 +68,14 @@
     <Compile Include="Models\Transactions\ProductModel.cs" />
     <Compile Include="Models\Transactions\StockMasterDetailModel.cs" />
     <Compile Include="Models\Transactions\StockMasterModel.cs" />
+    <Compile Include="Models\Transactions\SubTranBook.cs" />
     <Compile Include="Models\Transactions\TranactionMasterModel.cs" />
+    <Compile Include="Models\Transactions\TranBook.cs" />
     <Compile Include="Models\Transactions\TransactionDetailModel.cs" />
     <Compile Include="Models\Transactions\TransactionTypeDomain.cs" />
+    <Compile Include="Models\Transactions\TranType.cs" />
     <Compile Include="Models\Transactions\VerificationDomain.cs" />
+    <Compile Include="Models\Transactions\VerificationType.cs" />
     <Compile Include="PageUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Transactions\VerificationModel.cs" />

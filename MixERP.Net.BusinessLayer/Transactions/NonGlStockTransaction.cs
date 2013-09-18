@@ -65,7 +65,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
 
         public static void MergeSalesQuotationToSalesOrder(Collection<int> ids)
         {
-            MixERP.Net.Common.Models.Transactions.ProductModel model = new Common.Models.Transactions.ProductModel();
+            MixERP.Net.Common.Models.Transactions.MergeModel model = new Common.Models.Transactions.MergeModel();
             Collection<MixERP.Net.Common.Models.Transactions.ProductDetailsModel> products = new Collection<Common.Models.Transactions.ProductDetailsModel>();
 
             using(DataTable table = MixERP.Net.DatabaseLayer.Transactions.NonGLStockTransaction.GetSalesQuotationView(ids))
@@ -76,7 +76,7 @@ namespace MixERP.Net.BusinessLayer.Transactions
                 }
 
                 model.ValueDate = MixERP.Net.Common.Conversion.TryCastDate(table.Rows[0]["value_date"]);
-                model.PartyId = MixERP.Net.Common.Conversion.TryCastInteger(table.Rows[0]["party_id"]);
+                model.PartyCode = MixERP.Net.Common.Conversion.TryCastString(table.Rows[0]["party_code"]);
                 model.PriceTypeId = MixERP.Net.Common.Conversion.TryCastInteger(table.Rows[0]["price_type_id"]);
                 model.ReferenceNumber = MixERP.Net.Common.Conversion.TryCastString(table.Rows[0]["reference_number"]);
                 model.StatementReference = MixERP.Net.Common.Conversion.TryCastString(table.Rows[0]["statement_reference"]);
